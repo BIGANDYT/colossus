@@ -18,7 +18,7 @@ namespace Colossus.RandomVariables
 
         public Dictionary<TValue, IRandomVariable[]> Correlations { get; set; }
 
-        public override IRandomValue<TValue> Sample(Random random = null)
+        public override IRandomValue<TValue> Sample(SampleContext context = null, Random random = null)
         {
             var value = Set.Sample(random);
             if (value == null) return null;

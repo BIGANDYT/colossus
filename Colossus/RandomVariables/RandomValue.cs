@@ -6,9 +6,10 @@ namespace Colossus.RandomVariables
 {
     public class RandomValue<TValue> : IRandomValue<TValue>
     {
-        public TValue Value { get; private set; }
-        public IEnumerable<IRandomVariable> Correlations { get; private set; }
         public IRandomVariable Generator { get; private set; }
+        public TValue Value { get; private set; }
+        public IEnumerable<IRandomVariable> Correlations { get; set; }
+        
 
         private Action<Visit> _updater;
 
@@ -38,10 +39,6 @@ namespace Colossus.RandomVariables
         {
             get { return Value; }
         }
-
-        IEnumerable<IRandomVariable> IRandomValue.Correlations
-        {
-            get { return Correlations; }
-        }
+        
     }
 }

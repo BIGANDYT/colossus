@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Colossus.RandomVariables;
 
@@ -36,10 +37,10 @@ namespace Colossus
             Tags = new Dictionary<string, object>();
         }
 
-        public virtual void UpdateState()
+        public virtual void UpdateState(SampleContext context = null)
         {
             foreach (var var in Group.All().SelectMany(g => g.Variables)
-                .Sample(_variables).Values)
+                .Sample(_variables, context).Values)
             {
                 var.Update(this);
             }
@@ -60,11 +61,18 @@ namespace Colossus
             ObservedLevels.Merge(Adjust(experience.Levels));
 
             //Update test variables given group's overrides for the variables in the experience
-            Group.GetOverrides(ObservedLevels).Sample(_testVariables);
-            
+            var ctx = Group.GetOverrides(ObservedLevels);
+            ctx.Sample(_testVariables);
+
+            if (ctx.GoalBoosts.Count > 0)
+            {
+                //Conversion rates are changed. Recalculate conversions when state is updated
+                _variables.Keys.OfType<Goal>().ToArray().ForEach(g=>_variables.Remove(g));
+            }
+
             _variables.Merge(_testVariables, overwrite: true);            
 
-            UpdateState();
+            UpdateState(ctx);
         }
 
         public Visit Clone()

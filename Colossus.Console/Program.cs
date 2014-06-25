@@ -34,9 +34,12 @@ namespace Colossus.Console
             //Define base conversion rates and tags
             var baseGroup = new VisitGroup(
                 new GoalVariable(goals[0], 0.1)
-                    .Correlate(goals[1], 0.3, 0.5),
-                new GoalVariable(goals[2], 0.02),
+                    .Correlate(goals[1], 0.3, 0.5), //When goal 1 happens goal 2 is more likely to happen
 
+                    //For some reason the buying visits are more likely to be women
+                new GoalVariable(goals[2], 0.02).WhenTrue(Variables.Weighted("Gender", new Dictionary<string, double> {{"Female", 0.8}, {"Male", 0.2}})),
+
+                Variables.Weighted("Gender", new Dictionary<string, double>{{"Male", 0.49}, {"Female", 0.51}}),
                 Variables.Weighted("Country", new Dictionary<string, double>{{"Denmark", 0.7}, {"Australia", 0.2}, {"Chile", 0.05}, {"Sweden", 0.05}})
                 );
             
@@ -45,8 +48,8 @@ namespace Colossus.Console
                 ).Base(baseGroup)
                     //Germans will buy a lot when Var 1 shows B
                     .When(factors[0], 1).Then(new GoalVariable(goals[2], 0.4))
-                    //Germans don't like the combination A/B
-                    .When(factors[0], 0).And(factors[1], 1).Then(new GoalVariable(goals[0], 0.01), new GoalVariable(goals[1], 0));
+                    //Germans don't like the combination A/B. The conversion rate for downloads will drop with 20%
+                    .When(factors[0], 0).And(factors[1], 1).Boost(goals[0], 0).End();
 
             var simulator = new VisitSimulator(new Dictionary<VisitGroup, double>
             {

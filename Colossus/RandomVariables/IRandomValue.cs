@@ -12,7 +12,7 @@ namespace Colossus.RandomVariables
         IRandomVariable Generator { get; }
         object Value { get; }
 
-        IEnumerable<IRandomVariable> Correlations { get; }
+        IEnumerable<IRandomVariable> Correlations { get; set; }
 
         void Update(Visit visit);
     }

@@ -12,7 +12,7 @@ namespace Colossus.RandomVariables
             Value = value;
         }
 
-        public override IRandomValue<TValue> Sample(Random random = null)
+        public override IRandomValue<TValue> Sample(SampleContext context = null, Random random = null)
         {
             return new RandomValue<TValue>(this, Value, v=>v.Tags[Key] = Value);
         }

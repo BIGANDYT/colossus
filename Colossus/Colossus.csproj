@@ -63,6 +63,8 @@
     <Compile Include="Goal.cs" />
     <Compile Include="GoalSet.cs" />
     <Compile Include="GoalState.cs" />
+    <Compile Include="RandomVariables\RandomVariableHelpers.cs" />
+    <Compile Include="RandomVariables\SampleContext.cs" />
     <Compile Include="RandomVariables\Variables.cs" />
     <Compile Include="RandomVariables\FixedTag.cs" />
     <Compile Include="RandomVariables\GoalVariable.cs" />

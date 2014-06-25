@@ -9,14 +9,14 @@ namespace Colossus.RandomVariables
             get { return Key; }
         }
 
-        public abstract IRandomValue<TValue> Sample(Random random = null);
+        public abstract IRandomValue<TValue> Sample(SampleContext context = null, Random random = null);
 
 
         public TKey Key { get; set; }
 
-        IRandomValue IRandomVariable.Sample(Random random = null)
+        IRandomValue IRandomVariable.Sample(SampleContext context = null, Random random = null)
         {
-            return Sample(random);
+            return Sample(context, random);
         }
     }
 }

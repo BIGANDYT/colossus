@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Colossus.RandomVariables;
 
@@ -26,12 +27,21 @@ namespace Colossus
 
         //private Dictionary<Experience, List<IRandomVariable>> _cache = new Dictionary<Experience, List<IRandomVariable>>();
 
-        public IEnumerable<IRandomVariable> GetOverrides(Dictionary<ExperienceFactor, int> levels)
+        public SampleContext GetOverrides(Dictionary<ExperienceFactor, int> levels)
         {
-            List<IRandomVariable> variables;
-            return this.All().SelectMany(g => g.ExperienceOverrides.Where(e => e.Matches(levels))
-                    .OrderByDescending(f => f.Factors.Count)).SelectMany(f=>f.Variables)
-                    .ToList();                
+            var ctx = new SampleContext();
+            
+            var overrides = this.All().SelectMany(g => g.ExperienceOverrides.Where(e => e.Matches(levels))
+                .OrderByDescending(f => f.Factors.Count)).ToArray();
+
+            foreach (var o in overrides)
+            {                
+                ctx.GoalBoosts.Merge(o.GoalBoosts);
+            }
+           
+            ctx.Variables = overrides.SelectMany(o => o.Variables).ToList();
+
+            return ctx;
         }
 
         //public VisitGroup ClearCache()
