@@ -8,18 +8,23 @@ namespace Colossus
     {
         private readonly Random _random;
         private readonly SampleSet<VisitGroup> _groupSet;
-        private readonly IVisitContextFactory _distributor;
+        public IVisitContextFactory ContextFactory { get; set; }
 
-        
+
+        public VisitSimulator(VisitGroup group, IVisitContextFactory contextFactory)
+            : this(new Dictionary<VisitGroup, double> { { group, 1} }, contextFactory)
+        {
+            
+        }
 
         public VisitSimulator(Dictionary<VisitGroup, double> groupWeights, 
-            IVisitContextFactory distributor,
+            IVisitContextFactory contextFactory,
             Random random = null)
         {            
             _random = random ?? Randomness.Random;
             _groupSet = new SampleSet<VisitGroup>(groupWeights);
 
-            _distributor = distributor;            
+            ContextFactory = contextFactory;            
         }
 
         public IEnumerable<Visit> Next(int count)
@@ -30,7 +35,7 @@ namespace Colossus
         public Visit Next()
         {
             var group = _groupSet.Sample(_random);
-            var ctx = _distributor.CreateContext(group.SpawnVisit());
+            var ctx = ContextFactory.CreateContext(group.SpawnVisit());
 
             ctx.Commit();
 

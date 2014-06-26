@@ -15,11 +15,56 @@ namespace Colossus.Console
 
         static void Main(string[] args)
         {
-
-            Online(args);
-//            Offline(args);
+            Simple(args);
+            //Online(args);
+            //Offline(args);
         }
 
+
+        static void Simple(string[] args)
+        {
+            var output = System.Console.Out;
+
+            var baseUrl = "http://skynet.local";
+            var testUrl = baseUrl + "/en/Solutions/Solution%201.aspx";
+
+
+            var goals = new[]
+            {                
+                new UrlTriggeredGoal("Brochure Request", 2, baseUrl + "/en/Partners/Aoede.aspx"),
+                new UrlTriggeredGoal("Newsletter Signup", 2, baseUrl + "/en/Partners/Arche.aspx"),
+                new UrlTriggeredGoal("Instant Demo", 4, baseUrl + "/en/Partners/Autonoe.aspx")
+            };
+
+
+            var config = new VisitGroup(
+                Variables.Goal(goals[0], 0.1),
+                Variables.Goal(goals[1], 0.1),
+                Variables.Goal(goals[2], 0.05),
+                Variables.Fixed("Country", "England")
+
+                ).When("Promo", "Original").Then(
+                    Variables.Goal(goals[0], 0.5)
+                );
+
+            
+
+            var simpleSim = new VisitSimulator(config, new ExperienceCrawler(testUrl));            
+
+            var visits = new List<Visit>();
+            foreach (var v in simpleSim.Next(100))
+            {
+                output.WriteLine("Made a visit from {1} with value {0:N0}", v.Value, v.Tags["Country"]);
+                visits.Add(v);
+            }
+
+            output.WriteLine();
+            output.WriteLine("Summary:");
+
+            Summarize(output, simpleSim.ContextFactory.Tests.First(), visits);
+            
+        }
+        
         static void Online(string[] args)
         {                       
             var output = System.Console.Out;
@@ -30,19 +75,19 @@ namespace Colossus.Console
 
             var goals = new[]
             {
+                
                 new UrlTriggeredGoal("Brochure Request", 2, baseUrl + "/en/Partners/Aoede.aspx"),
                 new UrlTriggeredGoal("Newsletter Signup", 2, baseUrl + "/en/Partners/Arche.aspx"),
                 new UrlTriggeredGoal("Instant Demo", 4, baseUrl + "/en/Partners/Autonoe.aspx")
             };
 
-
             //Define base conversion rates and tags
             var baseGroup = new VisitGroup(
-                new GoalVariable(goals[0], 0.1)
+                Variables.Goal(goals[0], 0.1)
                     .Correlate(goals[1], 0.3, 0.5), //When goal 1 happens goal 2 is more likely to happen
 
-                    //For some reason the buying visits are more likely to be women
-                new GoalVariable(goals[2], 0.02).WhenTrue(Variables.Weighted("Gender", new Dictionary<string, double> { { "Female", 0.8 }, { "Male", 0.2 } })),
+                //For some reason the buying visits are more likely to be women
+                Variables.Goal(goals[2], 0.02).WhenTrue(Variables.Weighted("Gender", new Dictionary<string, double> { { "Female", 0.8 }, { "Male", 0.2 } })),
 
                 Variables.Weighted("Gender", new Dictionary<string, double> { { "Male", 0.49 }, { "Female", 0.51 } }),
                 Variables.Weighted("Country", new Dictionary<string, double> { { "Denmark", 0.7 }, { "Australia", 0.2 }, { "Chile", 0.05 }, { "Sweden", 0.05 } })
@@ -50,9 +95,9 @@ namespace Colossus.Console
 
             var germans = new VisitGroup(
                 Variables.Fixed("Country", "Germany")
-                ).Base(baseGroup)
+                ).Override(baseGroup)
                 //Germans will buy a lot when Var 1 shows B
-                .When("Promo", "Variation Name").Then(new GoalVariable(goals[2], 0.4));
+                .When("Promo", "Variation Name").Then(Variables.Goal(goals[2], 0.4));
 
 
             var crawler = new ExperienceCrawler(testUrl) {Clock = new Clock()};
@@ -107,11 +152,11 @@ namespace Colossus.Console
 
             //Define base conversion rates and tags
             var baseGroup = new VisitGroup(
-                new GoalVariable(goals[0], 0.1)
+                Variables.Goal(goals[0], 0.1)
                     .Correlate(goals[1], 0.3, 0.5), //When goal 1 happens goal 2 is more likely to happen
 
                     //For some reason the buying visits are more likely to be women
-                new GoalVariable(goals[2], 0.02).WhenTrue(Variables.Weighted("Gender", new Dictionary<string, double> {{"Female", 0.8}, {"Male", 0.2}})),
+                Variables.Goal(goals[2], 0.02).WhenTrue(Variables.Weighted("Gender", new Dictionary<string, double> { { "Female", 0.8 }, { "Male", 0.2 } })),
 
                 Variables.Weighted("Gender", new Dictionary<string, double>{{"Male", 0.49}, {"Female", 0.51}}),
                 Variables.Weighted("Country", new Dictionary<string, double>{{"Denmark", 0.7}, {"Australia", 0.2}, {"Chile", 0.05}, {"Sweden", 0.05}})
@@ -119,9 +164,9 @@ namespace Colossus.Console
 
             var germans = new VisitGroup(
                 Variables.Fixed("Country", "Germany")
-                ).Base(baseGroup)
+                ).Override(baseGroup)
                 //Germans will buy a lot when Var 1 shows B
-                .When(null, "B").Then(new GoalVariable(goals[2], 0.4))
+                .When(null, "B").Then(Variables.Goal(goals[2], 0.4))
                 //Germans don't like the combination A/B. The conversion rate for downloads will drop with 20%
                     .When("V1", "A").And("V2", "B").Boost(goals[0], 0.8).End();
 
@@ -178,6 +223,7 @@ namespace Colossus.Console
                 Name = name,
                 Levels = Enumerable.Range(0, variationCount).Select(i => ""+(char)(65 + i)).ToArray()
             };
-        }
+        }        
+
     }
 }

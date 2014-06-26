@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colossus", "Colossus\Coloss
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colossus.Console", "Colossus.Console\Colossus.Console.csproj", "{B6AAB68A-B7DC-4151-930C-3692E403236F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colossus.Rootkit", "Colossus.Rootkit\Colossus.Rootkit.csproj", "{88718576-8FEA-46ED-BBE3-031C844741BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colossus.Integration", "Colossus.Integration\Colossus.Integration.csproj", "{88718576-8FEA-46ED-BBE3-031C844741BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

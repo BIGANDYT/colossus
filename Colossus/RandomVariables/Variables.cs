@@ -14,6 +14,11 @@ namespace Colossus.RandomVariables
             return new FixedTag<TValue>(key, value);
         }
 
+
+        public static GoalVariable Goal(Goal goal, double probability)
+        {
+            return new GoalVariable(goal, probability);
+        }
         
     }
 }

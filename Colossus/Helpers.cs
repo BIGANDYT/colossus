@@ -25,11 +25,13 @@ namespace Colossus
         }
 
         
-        public static VisitGroup Base(this VisitGroup group, VisitGroup baseGroup)
+        public static VisitGroup Override(this VisitGroup group, VisitGroup baseGroup)
         {
             group.BaseGroup = baseGroup;
             return group;
         }
+
+        
 
         public static VisitGroup AddVariables(this VisitGroup group, params IRandomVariable[] vars)
         {
