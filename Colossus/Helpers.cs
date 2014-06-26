@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Colossus.RandomVariables;
 
 namespace Colossus
@@ -11,6 +12,16 @@ namespace Colossus
         public static ExperienceOverride.Builder When(this VisitGroup group, ExperienceFactor factor, int level)
         {
             return new ExperienceOverride.Builder(group).And(factor, level);
+        }
+
+        public static ExperienceOverride.Builder When(this VisitGroup group, string factorName, int level)
+        {
+            return new ExperienceOverride.Builder(group).And(factorName, level);
+        }
+
+        public static ExperienceOverride.Builder When(this VisitGroup group, string factorName, string levelName)
+        {
+            return new ExperienceOverride.Builder(group).And(factorName, levelName);
         }
 
         
@@ -63,10 +74,10 @@ namespace Colossus
             return dict.ToDictionary(kv => kv.Key, kv => kv.Value);
         }
 
-        public static bool Contains<TKey, TValue>(this IDictionary<TKey, TValue> dict, IDictionary<TKey, TValue> other, bool equals = false)
+        public static bool Contains<TKey, TValue>(this IDictionary<TKey, TValue> dict, IEnumerable<KeyValuePair<TKey, TValue>> other, bool equals = false)
         {
             TValue val;
-            return other.All(kv => dict.TryGetValue(kv.Key, out val) && val.Equals(kv.Value)) && (!equals || dict.Count == other.Count);
+            return other.All(kv => dict.TryGetValue(kv.Key, out val) && val.Equals(kv.Value)) && (!equals || dict.Count == other.Count());
         }
 
         public static void Merge<TKey, TValue>(this IDictionary<TKey, TValue> target,
@@ -89,9 +100,12 @@ namespace Colossus
             return dict;
         }
 
-        public static string Format(this KeyValuePair<ExperienceFactor, int> factorLevel)
+        public static string Format(this KeyValuePair<ExperienceFactor, int> factorLevel, bool includeName = true)
         {
-            return string.Format("{0}:{1}", factorLevel.Key.Name, factorLevel.Key.Levels[factorLevel.Value]);
+            var sb = new StringBuilder();
+            if (includeName) sb.Append(factorLevel.Key.Name).Append(":");
+            sb.Append(factorLevel.Key.Levels[factorLevel.Value]);
+            return sb.ToString();
         }
 
 

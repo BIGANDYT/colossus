@@ -8,19 +8,20 @@ namespace Colossus
     public class VisitGroup
     {
         public VisitGroup BaseGroup { get; set; }
-        public string Name { get; set; }        
-
-        public List<IRandomVariable> Variables{ get; set; }
+        public string Name { get; set; }
+        
+        public List<IRandomVariable> Variables { get; set; }
 
         public List<ExperienceOverride> ExperienceOverrides { get; set; }
-       
+
         public Visit SpawnVisit()
         {
             var v = new Visit()
-            {                
-                Group = this             
+            {
+                Group = this
             };
             v.UpdateState();
+            
             return v;
         }
 
@@ -30,16 +31,16 @@ namespace Colossus
         public SampleContext GetOverrides(Dictionary<ExperienceFactor, int> levels)
         {
             var ctx = new SampleContext();
-            
-            var overrides = this.All().SelectMany(g => g.ExperienceOverrides.Where(e => e.Matches(levels))
-                .OrderByDescending(f => f.Factors.Count)).ToArray();
 
-            foreach (var o in overrides)
-            {                
+            ctx.Variables = new List<IRandomVariable>();
+
+            foreach (var o in this.All().SelectMany(g => g.ExperienceOverrides.Where(e => e.Matches(levels))
+                .OrderByDescending(f => f.Factors.Count)))
+            {
+                ctx.Variables.AddRange(o.Variables);
                 ctx.GoalBoosts.Merge(o.GoalBoosts);
             }
-           
-            ctx.Variables = overrides.SelectMany(o => o.Variables).ToList();
+            
 
             return ctx;
         }
@@ -50,10 +51,10 @@ namespace Colossus
         //    return this;
         //}
 
-        
+
 
         public VisitGroup(params IRandomVariable[] variables)
-        {            
+        {
             Variables = variables.ToList();
             ExperienceOverrides = new List<ExperienceOverride>();
         }

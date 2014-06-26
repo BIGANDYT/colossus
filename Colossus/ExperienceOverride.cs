@@ -5,8 +5,8 @@ using Colossus.RandomVariables;
 namespace Colossus
 {
     public class ExperienceOverride
-    {
-        public Dictionary<ExperienceFactor, int> Factors { get; set; }
+    {        
+        public List<ExperienceFactorMatcher> Factors { get; set; }
 
         public List<IRandomVariable> Variables { get; set; }
 
@@ -14,14 +14,14 @@ namespace Colossus
 
         public ExperienceOverride()
         {
-            Factors = new Dictionary<ExperienceFactor, int>();
+            Factors = new List<ExperienceFactorMatcher>();
             Variables = new List<IRandomVariable>();
             GoalBoosts = new Dictionary<Goal, double>();
         }
 
         public bool Matches(Dictionary<ExperienceFactor, int> levels)
         {
-            return levels.Contains(Factors);
+            return Factors.All(f => f.Match(levels));
         }
 
         public class Builder
@@ -36,7 +36,19 @@ namespace Colossus
 
             public Builder And(ExperienceFactor factor, int level)
             {
-                _override.Factors.Add(factor, level);
+                _override.Factors.Add(new DirectFactorMatcher(factor, level));
+                return this;
+            }
+
+            public Builder And(string name, int level)
+            {
+                _override.Factors.Add(new FactorByNameMatcher(name, level));
+                return this;
+            }
+
+            public Builder And(string factorName, string levelName)
+            {
+                _override.Factors.Add(new FactorLevelByNameMatcher(factorName, levelName));
                 return this;
             }
 
@@ -60,5 +72,62 @@ namespace Colossus
         } 
     }
 
-    
+
+    public abstract class ExperienceFactorMatcher
+    {
+        public abstract bool Match(IDictionary<ExperienceFactor, int> levels);
+    }
+
+    public class DirectFactorMatcher : ExperienceFactorMatcher
+    {
+        public ExperienceFactor Factor { get; set; }
+        public int Level { get; set; }
+
+
+        public DirectFactorMatcher(ExperienceFactor factor, int level)
+        {
+            Factor = factor;
+            Level = level;
+        }
+
+
+        public override bool Match(IDictionary<ExperienceFactor, int> levels)
+        {
+            int level;
+            return levels.TryGetValue(Factor, out level) && level == Level;
+        }
+    }
+    public class FactorByNameMatcher : ExperienceFactorMatcher
+    {
+        public string Name { get; set; }
+        public int Level { get; set; }
+
+        public FactorByNameMatcher(string name, int level)
+        {
+            Name = name;
+            Level = level;
+        }
+
+        public override bool Match(IDictionary<ExperienceFactor, int> levels)
+        {
+            return levels.Any(kv => kv.Key.Name.Equals(Name) && kv.Value == Level);
+        }
+    }
+
+    public class FactorLevelByNameMatcher : ExperienceFactorMatcher
+    {
+        public string LevelName { get; set; }
+        public string FactorName { get; set; }
+
+        public FactorLevelByNameMatcher(string factorName, string levelName)
+        {
+            LevelName = levelName;
+            FactorName = factorName;
+        }
+
+        public override bool Match(IDictionary<ExperienceFactor, int> levels)
+        {            
+            return levels.Any(kv => kv.Key.Levels[kv.Value].Equals(LevelName) && (FactorName == null || kv.Key.Name == FactorName));
+        }
+    }
 }

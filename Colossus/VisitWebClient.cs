@@ -3,8 +3,15 @@ using System.Net;
 
 namespace Colossus
 {
-    public class CookieAwareWebClient : WebClient
+    public class VisitWebClient : WebClient
     {
+        public WebVisitContext Context { get; set; }
+
+        public VisitWebClient(WebVisitContext context)
+        {
+            Context = context;
+        }
+
         private readonly CookieContainer _container = new CookieContainer();
 
         protected override WebRequest GetWebRequest(Uri address)
@@ -15,6 +22,9 @@ namespace Colossus
             {
                 webRequest.CookieContainer = _container;
             }
+
+            Context.PrepareRequest(request);
+
             return request;
         }
     }

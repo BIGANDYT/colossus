@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colossus", "Colossus\Coloss
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colossus.Console", "Colossus.Console\Colossus.Console.csproj", "{B6AAB68A-B7DC-4151-930C-3692E403236F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colossus.Rootkit", "Colossus.Rootkit\Colossus.Rootkit.csproj", "{88718576-8FEA-46ED-BBE3-031C844741BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88718576-8FEA-46ED-BBE3-031C844741BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88718576-8FEA-46ED-BBE3-031C844741BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88718576-8FEA-46ED-BBE3-031C844741BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88718576-8FEA-46ED-BBE3-031C844741BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

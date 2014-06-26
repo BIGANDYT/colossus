@@ -7,7 +7,6 @@ namespace Colossus.RandomVariables
     public static class RandomVariableHelpers
     {
         
-
         public static GoalVariable WhenTrue(this GoalVariable gp, params IRandomVariable[] ps)
         {
             gp.TrueCorrelations = ps.ToList();
@@ -37,28 +36,52 @@ namespace Colossus.RandomVariables
         /// <param name="correlation"></param>
         /// <returns></returns>
         public static GoalVariable Correlate(this GoalVariable gp, Goal goal, double marginal, double correlation, Action<GoalVariable, bool> chain = null)
-        {            
+        {
+            double ptrue, pfalse;
+            if (gp.Probability >= 1)
+            {
+                ptrue = marginal;
+                pfalse = 0;
+            }
+            else if (gp.Probability <= 0 || marginal <= 0)
+            {
+                ptrue = pfalse = 0;
+            }
+            else if (marginal >= 1)
+            {
+                ptrue = pfalse = 1;
+            }
+            else
+            {
+                var pa = gp.Probability;
+                var qa = 1 - pa;
+                var pb = marginal;
+                var qb = 1 - marginal;
 
-            var pa = gp.Probability;
-            var qa = 1 - pa;
-            var pb = marginal;
-            var qb = 1 - marginal;
+                var sqrt = Math.Sqrt(pa*qa*pb*qb);
+                var r_max = (Math.Min(pa, pb) - pa*pb)/sqrt; //Maximum correlation given marginal probabilities
+                var r_min = -(Math.Min(qa, pb) - qa*pb)/sqrt; //Minimum correlation given marginal probabilities
 
-            var sqrt = Math.Sqrt(pa * qa * pb * qb);
-            var r_max = (Math.Min(pa, pb) - pa * pb) / sqrt; //Maximum correlation given marginal probabilities
-            var r_min = -(Math.Min(qa, pb) - qa * pb) / sqrt; //Minimum correlation given marginal probabilities
+                correlation = r_min + (correlation + 1)/2d*r_max; //Rescale correlation to min/max
 
-            correlation = r_min + (correlation + 1) / 2d * r_max; //Rescale correlation to min/max
+                ptrue = correlation*sqrt + pa*pb; // P(A ^ B) = r * sqrt(p_a*q_a*p_b*q_b) + p_a*p_b
+                pfalse = -correlation*sqrt + qa*pb;
+                    // Same as above, except it's in the other diagonal so it's -r * (etc.)
+                
+                if (new[] {ptrue, pa - ptrue, pfalse, qa - pfalse}.Any(x => x < 0 || x > 1))
+                {
+                    Console.Error.WriteLine("Invalid correlation/marginal probabilitiy specified");
+                }
 
-            var p_true = correlation * sqrt + pa * pb; // P(A ^ B) = r * sqrt(p_a*q_a*p_b*q_b) + p_a*p_b
-            var p_false = -correlation * sqrt + qa * pb; // Same as above, except it's in the other diagonal so it's -r * (etc.)
+                ptrue /= pa; //P(B | A) = P(A v B)/P(A)
+                pfalse /= qa; //P(B | ^A) = P(^A v B)/P(^A)          
+            }
 
-            var t = new GoalVariable(goal, p_true / pa);//P(B | A) = P(A v B)/P(A)
-            gp.TrueCorrelations.Add(t);             
+            var t = new GoalVariable(goal, ptrue);
+            gp.TrueCorrelations.Add(t);
 
-            var f = new GoalVariable(goal, p_false / qa);//P(B | ^A) = P(^A v B)/P(^A)
+            var f = new GoalVariable(goal, pfalse);
             gp.FalseCorrelations.Add(f);
-
 
             if (chain != null)
             {
@@ -66,37 +89,8 @@ namespace Colossus.RandomVariables
                 chain(f, false);
             }
 
-            if (new[] { p_true, pa - p_true, p_false, qa - p_false }.Any(x => x < 0 || x > 1))
-            {
-                Console.Error.WriteLine("Invalid correlation/marginal probabilitiy specified");
-            }            
-
             return gp;
-        }
-
-        
-        //public static IEnumerable<GoalVariable> Boost(this IEnumerable<GoalVariable> probabilities,
-        //    IDictionary<Goal, double> boosts, bool clone = true)
-        //{
-        //    if (clone)
-        //    {
-
-        //        probabilities = probabilities.Select(p => p.Clone()).ToList();
-        //    }
-
-        //    foreach (var p in probabilities.All())
-        //    {
-        //        double boost;
-        //        if (boosts.TryGetValue(p.Key, out boost))
-        //        {
-        //            p.Probability *= boost;
-        //        }
-        //    }
-
-        //    return probabilities;
-        //}
-
-
+        }     
 
         public static IEnumerable<VisitGroup> All(this VisitGroup group)
         {

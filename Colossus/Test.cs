@@ -9,10 +9,18 @@ namespace Colossus
 
         public string Url { get; set; }
 
+
+        public ExperienceFactor[] Factors { get; private set; }
+
+        public Test(ExperienceFactor[] factors)
+        {
+            Factors = factors;
+        }
+
         public List<Experience> Experiences { get; set; }
 
         public Experience GetExperience(Dictionary<ExperienceFactor, int> factors, bool addIfMissing = false)
-        {
+        {            
             foreach (var exp in Experiences)
             {
                 if (exp.Levels.Contains(factors, true))
@@ -36,8 +44,8 @@ namespace Colossus
         }
 
         public static Test FromFactors(params ExperienceFactor[] factors)
-        {
-            var test = new Test();
+        {            
+            var test = new Test(factors);            
             test.Experiences = new RoundRobinCounter(factors.Select(f => f.Levels.Length).ToArray(), false).All
                 .Select((combination, i) =>
                     new Experience

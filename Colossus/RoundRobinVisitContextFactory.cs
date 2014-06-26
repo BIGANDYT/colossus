@@ -3,27 +3,18 @@ using System.Linq;
 
 namespace Colossus
 {
-    public interface IExperienceDistributor
-    {
-        Test Test { get; }
-
-        /// <summary>
-        /// Call this method with the personalization rules that are relevant to the visitor to get the variations to show/include.        
-        /// For example, if a personalization rule shows a sausage to German visitors then the rule should be included here only for Germans.                
-        /// </summary>                
-        ExperienceContext GetNext(Visit visit);
-    }
-
-    public class RoundRobinExperienceDistributor : IExperienceDistributor
+    public class RoundRobinVisitContextFactory : IVisitContextFactory
     {
         public bool DistributeEvenlyForSubGroups { get; private set; }
+        
+
 
         public Test Test { get; set; }
         private Dictionary<long, RoundRobinCounter> _counters;
 
         private PersonalizationRule[] _rules;
        
-        public RoundRobinExperienceDistributor(Test test, bool distributeEvenlyForSubGroups = true)
+        public RoundRobinVisitContextFactory(Test test, bool distributeEvenlyForSubGroups = true)
         {
             DistributeEvenlyForSubGroups = distributeEvenlyForSubGroups;
 
@@ -33,11 +24,16 @@ namespace Colossus
         }
 
 
+        public IEnumerable<Test> Tests
+        {
+            get { yield return Test; }
+        }
+
         /// <summary>
         /// Call this method with the personalization rules that are relevant to the visitor to get the variations to show/include.        
         /// For example, if a personalization rule shows a sausage to German visitors then the rule should be included here only for Germans.                
         /// </summary>                
-        public ExperienceContext GetNext(Visit visit)
+        public VisitContext CreateContext(Visit visit)
         {            
             var key =
                 DistributeEvenlyForSubGroups
@@ -50,12 +46,10 @@ namespace Colossus
             counter = _counters.TryGetValue(key, out counter)
                 ? counter
                 : _counters[key] = new RoundRobinCounter(new[] {Test.Experiences.Count});
-
-            return new ExperienceContext
-            {
-                Experience = Test.Experiences[counter.Next[0]],
-                VisitContext = new VisitContext() {  Visit = visit}
-            };            
+            
+            
+            visit.UpdateState(Test.Experiences[counter.Next[0]]);
+            return new VisitContext(visit);            
         }
     }
 }

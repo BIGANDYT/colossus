@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace Colossus
 {
@@ -8,13 +9,22 @@ namespace Colossus
         
         public int Value { get; set; }
 
+        public GoalGroup GoalGroup { get; set; }
+        
+        public Goal(string name, int value)
+        {
+            Name = name;
+            Value = value;
 
-        public virtual GoalState GetState(string currentUrl, string pageHtml)
+            GoalGroup = new GoalGroup {Id = Guid.NewGuid(), Name = name};
+        }
+
+        public virtual GoalState GetState(VisitContext visit)
         {
             return GoalState.Unavailable;
         }
 
-        public virtual void Convert(string currentUrl, string pageHtml, WebClient wc)
+        public virtual void Convert(VisitContext vist)
         {
             
         }

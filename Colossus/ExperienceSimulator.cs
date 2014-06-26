@@ -8,12 +8,12 @@ namespace Colossus
     {
         private readonly Random _random;
         private readonly SampleSet<VisitGroup> _groupSet;
-        private readonly IExperienceDistributor _distributor;
+        private readonly IVisitContextFactory _distributor;
 
         
 
         public VisitSimulator(Dictionary<VisitGroup, double> groupWeights, 
-            IExperienceDistributor distributor, 
+            IVisitContextFactory distributor,
             Random random = null)
         {            
             _random = random ?? Randomness.Random;
@@ -30,14 +30,11 @@ namespace Colossus
         public Visit Next()
         {
             var group = _groupSet.Sample(_random);
+            var ctx = _distributor.CreateContext(group.SpawnVisit());
 
+            ctx.Commit();
 
-            var ctx = _distributor.GetNext(group.SpawnVisit());
-            ctx.VisitContext.Visit.UpdateState(ctx.Experience);
-            
-            ctx.VisitContext.Commit();
-
-            return ctx.VisitContext.Visit;
+            return ctx.Visit;
         }
 
 
