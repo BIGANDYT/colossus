@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{88718576-8FEA-46ED-BBE3-031C844741BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Colossus.Integration</RootNamespace>
+    <AssemblyName>Colossus.Integration</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Abstractions">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Aggregation">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Aggregation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Automation">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Automation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Automation.Aggregation">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Automation.Aggregation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Automation.MongoDB">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Automation.MongoDB.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Core">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.DataAccess">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.DataAccess.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Model">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Model.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.MongoDB">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.MongoDB.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Processing">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Processing.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.RobotDetection">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.RobotDetection.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Sql">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Sql.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.TestFramework">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.TestFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Apps.Loader">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Apps.Loader.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Apps.TagInjection">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Apps.TagInjection.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Automation.MarketingAutomation">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Automation.MarketingAutomation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Buckets">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Buckets.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Buckets.Client">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Buckets.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Cintel">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cintel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Cintel.Client">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cintel.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Client">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Cloud.Nexus">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.Nexus.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Cloud.ServiceModel">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.ServiceModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Cloud.Xdb">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.Xdb.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Cloud.Xdb.ServiceModel">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.Xdb.ServiceModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Analytics">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Analytics.Client">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Analytics.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Client">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Linq.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq.Lucene">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Linq.Lucene.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.LuceneProvider">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceEditor.Core">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ExperienceEditor.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceEditor.UI">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ExperienceEditor.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ItemWebApi">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ItemWebApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Logging">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Logging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc.Analytics">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc.DeviceSimulator">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.DeviceSimulator.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc.ExperienceEditor">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.ExperienceEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="sitecore.nexus">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\sitecore.nexus.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.NVelocity">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.NVelocity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Oracle">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Oracle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Publishing.WebDeploy">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Publishing.WebDeploy.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Security.AntiCsrf">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Security.AntiCsrf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Services.Client">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Services.Core">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Services.Infrastructure">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Infrastructure.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Services.Infrastructure.Sitecore">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.SessionProvider">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.SessionProvider.Memory">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.Memory.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.SessionProvider.MongoDB">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.MongoDB.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.SessionProvider.Sql">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.Sql.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.SessionProvider.Test">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.Test.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Shell.MarketingAutomation">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Shell.MarketingAutomation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Applications">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Applications.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Charting">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Charting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Client">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.ItemWebApi">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.ItemWebApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Mvc">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Mvc.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Ribbon">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Ribbon.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Server">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Server.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Web">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Web.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Update">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Update.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Zip">
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Zip.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TagProcessor.cs" />
+    <Compile Include="TimeTravel.cs" />
+    <Compile Include="VisitDataProcessor.cs" />
+    <Compile Include="Interceptor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Config\Include\Colossus.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
