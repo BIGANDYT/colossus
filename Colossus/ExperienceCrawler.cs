@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
@@ -75,12 +76,13 @@ namespace Colossus
 
     public class WebVisitContext : VisitContext
     {
-        public Clock Clock { get; set; }
+        public Clock Clock { get; set; }        
+
         public VisitWebClient WebClient { get; set; }        
 
         public WebVisitContext(Visit visit, Clock clock) : base(visit)
         {
-            Clock = clock;
+            Clock = clock;            
             WebClient = new VisitWebClient(this);
             RequestData = new Dictionary<string, object>();
         }

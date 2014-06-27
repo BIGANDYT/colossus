@@ -2,16 +2,15 @@ using System.Collections.Generic;
 
 namespace Colossus.RandomVariables
 {
-    public interface IRandomValue<out TValue> : IRandomValue
+    public interface IRandomValue<TValue> : IRandomValue
     {
-        new TValue Value { get; }
+        TValue Value { get; set; }
     }
 
     public interface IRandomValue
     {
         IRandomVariable Generator { get; }
-        object Value { get; }
-
+       
         IEnumerable<IRandomVariable> Correlations { get; set; }
 
         void Update(Visit visit);

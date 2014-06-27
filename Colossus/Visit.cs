@@ -9,7 +9,9 @@ namespace Colossus
     {
         public Dictionary<Test, Experience> Experiences { get; private set; }
 
-        public Dictionary<ExperienceFactor, int> ObservedLevels { get; private set; } 
+        public Dictionary<ExperienceFactor, int> ObservedLevels { get; private set; }
+
+        public DateTime Start { get; set; }
 
         public VisitGroup Group { get; set; }
 
@@ -22,7 +24,7 @@ namespace Colossus
 
         private Dictionary<object, IRandomValue> _variables = new Dictionary<object, IRandomValue>();
         private Dictionary<object, IRandomValue> _testVariables = new Dictionary<object, IRandomValue>();
-
+        
 
         public Dictionary<ExperienceFactor, int> Adjust(Dictionary<ExperienceFactor, int> factors)
         {
@@ -35,6 +37,7 @@ namespace Colossus
             ObservedLevels = new Dictionary<ExperienceFactor, int>();
             Goals = new HashSet<Goal>();
             Tags = new Dictionary<string, object>();
+            Start = DateTime.Now;
         }
 
         public virtual void UpdateState(SampleContext context = null)

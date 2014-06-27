@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Colossus.RandomVariables
 {
-    public class RandomValue<TValue> : IRandomValue<TValue>
+    public class RandomValue<TValue> : IRandomValue
     {
         public IRandomVariable Generator { get; private set; }
         public TValue Value { get; private set; }
@@ -15,7 +15,7 @@ namespace Colossus.RandomVariables
 
         public RandomValue(IRandomVariable generator, TValue value,
             Action<Visit> updater, IEnumerable<IRandomVariable> correlations = null)
-        {
+        {            
             Generator = generator;
             Value = value;
             Correlations = correlations ?? Enumerable.Empty<IRandomVariable>();
@@ -29,16 +29,6 @@ namespace Colossus.RandomVariables
                 _updater(visit);
             }
         }
-
-        TValue IRandomValue<TValue>.Value
-        {
-            get { return Value; }
-        }
-
-        object IRandomValue.Value
-        {
-            get { return Value; }
-        }
-        
+                      
     }
 }

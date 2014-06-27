@@ -2,21 +2,32 @@ using System;
 
 namespace Colossus.RandomVariables
 {
-    public abstract class RandomVariable<TKey, TValue> : IRandomVariable<TKey, TValue>
+    public abstract class RandomVariable<TKey> : RandomVariable        
     {
-        object IRandomVariable.Key
+        public new TKey Key
         {
-            get { return Key; }
+            get { return (TKey) base.Key; }
+            protected set { base.Key = Key; }
         }
 
-        public abstract IRandomValue<TValue> Sample(SampleContext context = null, Random random = null);
+        protected RandomVariable(TKey key, Random random = null)
+            : base(key, random)
 
+        {           
+        }   
+    }
 
-        public TKey Key { get; set; }
-
-        IRandomValue IRandomVariable.Sample(SampleContext context = null, Random random = null)
+    public abstract class RandomVariable : IRandomVariable
+    {
+        public object Key { get; protected set; }
+        protected Random Random { get; set; }
+       
+        public abstract IRandomValue Sample(SampleContext context = null);
+        
+        protected RandomVariable(object key = null, Random random = null)
         {
-            return Sample(context, random);
+            Key = key ?? this;
+            Random = random ?? Randomness.Random;
         }
     }
 }

@@ -22,10 +22,22 @@ namespace Colossus
             {
                 webRequest.CookieContainer = _container;
             }
-
+            
             Context.PrepareRequest(request);
 
             return request;
+        }
+
+        protected override WebResponse GetWebResponse(WebRequest request)
+        {
+            var response = base.GetWebResponse(request);
+
+            if (response.Headers["X-Colossus-Processing"] != "OK")
+            {
+                throw new Exception("The site didn't return as expected. Is the interceptor installed?");
+            }
+
+            return response;
         }
     }
 }

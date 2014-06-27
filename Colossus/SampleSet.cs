@@ -6,14 +6,14 @@ namespace Colossus
 {
     public class SampleSet<T>
     {
-        public IDictionary<T, double> Items { get; private set; }
+        public IEnumerable<KeyValuePair<T, double>> Items { get; private set; }
         private readonly Random _random;
         public T[] Values { get; private set; }
         private double[] _weights;
         private double _totalWeight;
         
 
-        public SampleSet(IDictionary<T, double> items)
+        public SampleSet(IEnumerable<KeyValuePair<T, double>> items)
         {
             Items = items;
             Values = items.Select(x => x.Key).ToArray();

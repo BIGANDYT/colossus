@@ -33,7 +33,7 @@ namespace Colossus.Console
             {                
                 new UrlTriggeredGoal("Brochure Request", 2, baseUrl + "/en/Partners/Aoede.aspx"),
                 new UrlTriggeredGoal("Newsletter Signup", 2, baseUrl + "/en/Partners/Arche.aspx"),
-                new UrlTriggeredGoal("Instant Demo", 4, baseUrl + "/en/Partners/Autonoe.aspx")
+                new UrlTriggeredGoal("Instant Demo", 4, baseUrl + "/en/Partners/Autonoe.aspx")                
             };
 
 
@@ -41,22 +41,26 @@ namespace Colossus.Console
                 Variables.Goal(goals[0], 0.1),
                 Variables.Goal(goals[1], 0.1),
                 Variables.Goal(goals[2], 0.05),
-                Variables.Fixed("Country", "England")
+                Variables.Fixed("Country", "England"),
+                
+                Variables.Hour().AddPeak(12, 1).AddPeak(20, 4).Build(),
+
+                Variables.DayOfWeek().AddPeak(3, 4).Build()
 
                 ).When("Promo", "Original").Then(
                     Variables.Goal(goals[0], 0.5)
                 );
-
+            
             
 
             var simpleSim = new VisitSimulator(config, new ExperienceCrawler(testUrl));            
 
             var visits = new List<Visit>();
             foreach (var v in simpleSim.Next(100))
-            {
-                output.WriteLine("Made a visit from {1} with value {0:N0}", v.Value, v.Tags["Country"]);
-                visits.Add(v);
-            }
+            {                
+                output.WriteLine("Made a visit from {2} at {1} with value {0:N0}", v.Value, v.Start, v.Tags["Country"]);
+                visits.Add(v);                                
+            }            
 
             output.WriteLine();
             output.WriteLine("Summary:");

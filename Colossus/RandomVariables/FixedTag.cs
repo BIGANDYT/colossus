@@ -2,19 +2,18 @@ using System;
 
 namespace Colossus.RandomVariables
 {
-    public class FixedTag<TValue> : RandomVariable<string, TValue>
+    public class FixedTag<TValue> : RandomVariable
     {        
         public TValue Value { get; set; }
 
-        public FixedTag(string key, TValue value)
-        {
-            Key = key;
+        public FixedTag(string key, TValue value) : base(key)
+        {            
             Value = value;
         }
 
-        public override IRandomValue<TValue> Sample(SampleContext context = null, Random random = null)
+        public override IRandomValue Sample(SampleContext context = null)
         {
-            return new RandomValue<TValue>(this, Value, v=>v.Tags[Key] = Value);
+            return new RandomValue<TValue>(this, Value, v=>v.Tags[(string)Key] = Value);
         }
     }
 }

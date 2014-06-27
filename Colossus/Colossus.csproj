@@ -45,6 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clock.cs" />
+    <Compile Include="RandomVariables\PeakBuilder.cs" />
+    <Compile Include="RandomVariables\RandomDayOfWeek.cs" />
+    <Compile Include="RandomVariables\PeakVariable.cs" />
+    <Compile Include="RandomVariables\RandomHour.cs" />
+    <Compile Include="RandomVariables\RandomMonth.cs" />
+    <Compile Include="RandomVariables\RandomYear.cs" />
+    <Compile Include="RandomVariables\TagVariable.cs" />
+    <Compile Include="RandomVariables\ContinousVariable.cs" />
+    <Compile Include="RandomVariables\VariableFork.cs" />
     <Compile Include="RoundRobinVisitContextFactory.cs" />
     <Compile Include="UrlTriggeredGoal.cs" />
     <Compile Include="VisitWebClient.cs">

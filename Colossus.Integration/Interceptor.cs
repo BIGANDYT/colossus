@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
@@ -45,12 +46,16 @@ namespace Colossus.Integration
 
 
             var visitTags = ParseHeaderValue(httpContext.Request.Headers["X-Colossus-Visit"]);
-            var requestData = ParseHeaderValue(httpContext.Request.Headers["X-Colossus-Request"]);            
-            foreach (var proc in TagProcessors)
-            {
-                proc.Process(visitTags, requestData);                        
+            var requestData = ParseHeaderValue(httpContext.Request.Headers["X-Colossus-Request"]);
+            if (visitTags != null || requestData != null)
+            {                
+                foreach (var proc in TagProcessors)
+                {
+                    proc.Process(visitTags ?? new JObject(), requestData ?? new JObject());
+                }
+                httpContext.Response.Headers.Add("X-Colossus-Processing", "OK");
             }
-                         
+
 
 
             var page = Context.Page;
@@ -84,7 +89,7 @@ namespace Colossus.Integration
 
         JObject ParseHeaderValue(string value)
         {
-            return value == null ? new JObject() : JsonConvert.DeserializeObject(value) as JObject;
+            return value == null ? null : JsonConvert.DeserializeObject(value) as JObject;
         }
     }   
 }

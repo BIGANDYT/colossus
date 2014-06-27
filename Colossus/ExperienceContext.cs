@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Colossus
 {
@@ -7,6 +8,8 @@ namespace Colossus
         public Visit Visit { get; set; }
 
         public Dictionary<string, object> RequestData { get; set; }
+
+        public DateTime? LastVisit { get; set; }
 
         public VisitContext(Visit visit)
         {
