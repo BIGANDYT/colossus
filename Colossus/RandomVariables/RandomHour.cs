@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace Colossus.RandomVariables
 {
-    public class RandomHour : PeakVariable
+    public class RandomHour : ContinousVariable<Type>
     {
-        public RandomHour(double? offset = null, double spread = 0) 
-            : base(0, 24, offset, spread)
+        public RandomHour(IRandomDistribution random) : base(typeof(RandomHour), random)
         {
         }
 
         protected override void Action(Visit visit, double value)
         {
-            visit.Start = visit.Start.AddHours(-visit.Start.Hour + value);
+            visit.StartDate.Hour = value;
         }
     }
 }

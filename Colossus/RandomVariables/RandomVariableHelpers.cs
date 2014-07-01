@@ -20,7 +20,7 @@ namespace Colossus.RandomVariables
         }
 
 
-        public static WeightedTag<TValue> When<TValue>(this WeightedTag<TValue> var, TValue category, params IRandomVariable[] ps)
+        public static RandomTag<TValue> When<TValue>(this RandomTag<TValue> var, TValue category, params IRandomVariable[] ps)
         {
             var.Correlations.Add(category, ps);
             return var;
@@ -120,8 +120,11 @@ namespace Colossus.RandomVariables
             {
                 IRandomValue value;
                 if (!values.TryGetValue(var.Key, out value))
-                {                    
-                    values.Add(var.Key, value = var.Sample(context));
+                {
+                    if ((value = var.Sample(context)) != null)
+                    {
+                        values.Add(var.Key, value);
+                    }
                 }
 
                 if (value != null)

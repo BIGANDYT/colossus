@@ -135,6 +135,12 @@ namespace Colossus
             }
 
             return sorted;
-        }        
+        }
+
+
+        public static void WriteTsvLine(this StreamWriter writer, params object[] values)
+        {
+            writer.WriteLine(string.Join("\t", values.Select(v=>v.ToString())));
+        }
     }    
 }

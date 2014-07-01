@@ -11,7 +11,7 @@ namespace Colossus
 
         public Dictionary<ExperienceFactor, int> ObservedLevels { get; private set; }
 
-        public DateTime Start { get; set; }
+        public DateParts StartDate { get; set; }
 
         public VisitGroup Group { get; set; }
 
@@ -37,7 +37,7 @@ namespace Colossus
             ObservedLevels = new Dictionary<ExperienceFactor, int>();
             Goals = new HashSet<Goal>();
             Tags = new Dictionary<string, object>();
-            Start = DateTime.Now;
+            StartDate = new DateParts();
         }
 
         public virtual void UpdateState(SampleContext context = null)

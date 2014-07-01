@@ -26,7 +26,7 @@ namespace Colossus.RandomVariables
             double boost;
             boost = context != null && context.GoalBoosts.TryGetValue(Key, out boost) ? boost : 1d;            
            
-            var value = Random.NextDouble() < boost*Probability;
+            var value = Random.Next() < boost*Probability;
             return new RandomValue<bool>(this, value,
                 (visit) =>
                 {

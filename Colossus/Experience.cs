@@ -13,7 +13,7 @@ namespace Colossus
 
         public override string ToString()
         {
-            return string.Format("{0}. ({1})", 
+            return string.Format("{0, 2}. ({1})", 
                 Number, 
                 string.Join(", ", Levels.OrderBy(f => f.Key.Index).ThenBy(f => f.Key.Name).Select(f => f.Format(false))));            
         }

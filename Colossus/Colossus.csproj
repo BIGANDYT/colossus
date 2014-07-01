@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNumerics">
+      <HintPath>..\Other packages\DotNumerics.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -45,16 +48,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clock.cs" />
-    <Compile Include="RandomVariables\PeakBuilder.cs" />
+    <Compile Include="DateParts.cs" />
+    <Compile Include="RandomPareto.cs" />
+    <Compile Include="RandomVariables\IVariableBuilder.cs" />
+    <Compile Include="RandomVariables\NoOpVariable.cs" />
+    <Compile Include="RandomVariables\TimeSeriesBuilder.cs" />
     <Compile Include="RandomVariables\RandomDayOfWeek.cs" />
     <Compile Include="RandomVariables\PeakVariable.cs" />
     <Compile Include="RandomVariables\RandomHour.cs" />
-    <Compile Include="RandomVariables\RandomMonth.cs" />
+    <Compile Include="RandomVariables\RandomDayOfYear.cs" />
     <Compile Include="RandomVariables\RandomYear.cs" />
     <Compile Include="RandomVariables\TagVariable.cs" />
     <Compile Include="RandomVariables\ContinousVariable.cs" />
-    <Compile Include="RandomVariables\VariableFork.cs" />
+    <Compile Include="RandomVariables\TrendBuilder.cs" />
+    <Compile Include="RandomVariables\RandomFork.cs" />
     <Compile Include="RoundRobinVisitContextFactory.cs" />
+    <Compile Include="SimpleVisitContextFactory.cs" />
+    <Compile Include="Statistics.cs" />
     <Compile Include="UrlTriggeredGoal.cs" />
     <Compile Include="VisitWebClient.cs">
       <SubType>Component</SubType>
@@ -94,7 +104,7 @@
     <Compile Include="RandomVariables\IRandomVariable.cs" />
     <Compile Include="RandomVariables\RandomValue.cs" />
     <Compile Include="RandomVariables\RandomVariable.cs" />
-    <Compile Include="RandomVariables\WeightedTag.cs" />
+    <Compile Include="RandomVariables\RandomTag.cs" />
     <Compile Include="Visit.cs" />
     <Compile Include="VisitGroup.cs" />
     <Compile Include="ExperienceSimulator.cs" />

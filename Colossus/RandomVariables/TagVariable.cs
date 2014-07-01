@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Colossus.RandomVariables
 {
-    public abstract class TagVariable : RandomVariable
+    public abstract class TagVariable : RandomVariable<string>
     {
-        public string Key { get; set; }
-
-        protected TagVariable(string key)
+        protected TagVariable(string key, IRandomDistribution random = null)
+            : base(key, random)
         {
             Key = key;
         }

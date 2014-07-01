@@ -51,8 +51,7 @@ namespace Colossus
         //    return this;
         //}
 
-
-
+        
         public VisitGroup(params IRandomVariable[] variables)
         {
             Variables = variables.ToList();

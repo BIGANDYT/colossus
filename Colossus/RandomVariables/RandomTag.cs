@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Colossus.RandomVariables
 {
-    public class WeightedTag<TValue> : TagVariable
+    public class RandomTag<TValue> : TagVariable
     {
         public SampleSet<TValue> Set { get; set; }
 
-        public WeightedTag(string key, IDictionary<TValue, double> weights)
+        public RandomTag(string key, SampleSet<TValue> values)
             : base(key)
-        {           
-            Set = new SampleSet<TValue>(weights);
+        {
+            Set = values;
             Correlations = new Dictionary<TValue, IRandomVariable[]>();
         }
 
@@ -19,7 +19,7 @@ namespace Colossus.RandomVariables
 
         public override IRandomValue Sample(SampleContext context = null)
         {            
-            var value = Set.Sample(Random);
+            var value = Set.Sample();
             if (value == null) return null;
 
             return new RandomValue<TValue>(this, value, v=>v.Tags[Key] = value, Correlations.GetOrDefault(value) ?? Enumerable.Empty<IRandomVariable>());

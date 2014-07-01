@@ -5,9 +5,24 @@ namespace Colossus.RandomVariables
 {
     public static class Variables
     {
-        public static WeightedTag<TValue> Weighted<TValue>(string key, IDictionary<TValue, double> weights)
+        public static RandomTag<TValue> Random<TValue>(string key, SampleSet<TValue> set)
         {
-            return new WeightedTag<TValue>(key, weights);
+            return new RandomTag<TValue>(key, set);
+        }
+
+        public static RandomTag<TValue> Random<TValue>(string key, IDictionary<TValue, double> weights)
+        {
+            return new RandomTag<TValue>(key, new DiscreteSampleSet<TValue>(weights));
+        }
+
+        public static RandomTag<TValue> Random<TValue>(string key, object[,] weights)
+        {
+            var d = new Dictionary<TValue, double>();
+            for (int i = 0, n = weights.GetLength(0); i < n; i++)
+            {
+                d.Add((TValue) weights[i, 0], (double) weights[i, 1]);
+            }
+            return new RandomTag<TValue>(key, new DiscreteSampleSet<TValue>(d));
         }
 
         public static FixedTag<TValue> Fixed<TValue>(string key, TValue value)
@@ -22,24 +37,24 @@ namespace Colossus.RandomVariables
         }
 
 
-        public static PeakBuilder Hour()
+        public static TimeSeriesBuilder Hour()
         {
-            return new PeakBuilder((o,s)=>new RandomHour(o,s));
+            return new TimeSeriesBuilder(r=>new RandomHour(r), 0, 24);
         }
 
-        public static PeakBuilder DayOfWeek()
+        public static TimeSeriesBuilder DayOfWeek()
         {
-            return new PeakBuilder((o, s) => new RandomDayOfWeek(o, s));
+            return new TimeSeriesBuilder(r => new RandomDayOfWeek(r), 0, 7);
         }
 
-        public static PeakBuilder DayOfYear()
+        public static TimeSeriesBuilder DayOfYear()
         {
-            return new PeakBuilder((o, s) => new RandomDayOfYear(o, s));
+            return new TimeSeriesBuilder(r => new RandomDayOfYear(r), 0, 366);
         }
 
-        public static PeakBuilder Year(int min, int max)
+        public static TimeSeriesBuilder Year(int min, int max)
         {
-            return new PeakBuilder((o, s) => new RandomYear(min, max, o, s));
+            return new TimeSeriesBuilder(r => new RandomYear(r), min, max);
         }
     }
 }

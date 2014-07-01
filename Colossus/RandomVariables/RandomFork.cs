@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace Colossus.RandomVariables
 {
     //A "do nothing" variable that simply weights other variables
-    public class VariableFork : RandomVariable
+    public class RandomFork : RandomVariable
     {
         private SampleSet<IEnumerable<IRandomVariable>> _set;
-        
-        public VariableFork(Dictionary<IEnumerable<IRandomVariable>, double> weights)
-        {            
-            _set = new SampleSet<IEnumerable<IRandomVariable>>(weights);
+
+        public RandomFork(SampleSet<IEnumerable<IRandomVariable>> forks)
+        {
+            _set = forks;
         }
 
         public override IRandomValue Sample(SampleContext context = null)

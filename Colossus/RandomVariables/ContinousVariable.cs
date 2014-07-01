@@ -5,11 +5,10 @@ using System.Linq;
 
 namespace Colossus.RandomVariables
 {
-    public abstract class ContinousVariable : RandomVariable
+    public abstract class ContinousVariable<TKey> : RandomVariable<TKey>
     {
-        protected ContinousVariable(Random random = null) : base(random)
+        protected ContinousVariable(TKey key, IRandomDistribution random) : base(key, random)
         {
-            Key = GetType();
             Correlations = new List<Func<double, IRandomVariable[]>>();
         }
 
@@ -23,9 +22,18 @@ namespace Colossus.RandomVariables
             return Enumerable.Empty<IRandomVariable>();
         }
 
+        public override IRandomValue Sample(SampleContext context = null)
+        {
+            var value = Random.Next();
+            return new RandomValue<double>(this, value, v => Action(v, value), GetCorrelations(value));
+        }
+
+        protected abstract void Action(Visit visit, double value);        
+        
+
         public List<Func<double, IRandomVariable[]>> Correlations { get; private set; }
 
-        public ContinousVariable Correlate(double? min = null, double? max = null, params IRandomVariable[] variables)
+        public ContinousVariable<TKey> Correlate(double? min = null, double? max = null, params IRandomVariable[] variables)
         {
             Correlations.Add(v => (!min.HasValue || v >= min) && (!max.HasValue || v < max) ? variables : new IRandomVariable[0]);
 

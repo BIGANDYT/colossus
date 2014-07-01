@@ -18,7 +18,7 @@ namespace Colossus
 
         public void Update(VisitContext ctx)
         {
-            var start = ctx.LastVisit ?? ctx.Visit.Start;
+            var start = ctx.LastVisit ?? ctx.Visit.StartDate;
             var end = start + Duration;
 
             ctx.RequestData["StartDate"] = start;
