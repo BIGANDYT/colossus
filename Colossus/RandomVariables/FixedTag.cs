@@ -2,7 +2,7 @@ using System;
 
 namespace Colossus.RandomVariables
 {
-    public class FixedTag<TValue> : RandomVariable<string>
+    public class FixedTag<TValue> : TagVariable
     {        
         public TValue Value { get; set; }
 

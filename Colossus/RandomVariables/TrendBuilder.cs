@@ -28,7 +28,7 @@ namespace Colossus.RandomVariables
             _factory = factory;
         }
 
-        public TrendBuilder<TOwner> Line(double time, double? level = null)
+        public TrendBuilder<TOwner> LineTo(double time, double? level = null)
         {
             if( time < _currentStart) throw new ArgumentException("Steps must be added in time order", "time");
 
@@ -49,7 +49,7 @@ namespace Colossus.RandomVariables
             return this;
         }
 
-        public TrendBuilder<TOwner> Jump(double time, double level)
+        public TrendBuilder<TOwner> JumpTo(double time, double level)
         {
             if (time < _currentStart) throw new ArgumentException("Steps must be added in time order", "time");
 
@@ -59,17 +59,15 @@ namespace Colossus.RandomVariables
             return this;
         }
 
-        public TOwner Close(double? time = null, double? level = null)
+        public TOwner Close()
         {
-            if( time.HasValue ) Line(time.Value, level);
-
             var randoms =
                 _steps.Where(s => s.Area > 0).Select(s => new KeyValuePair<IEnumerable<IRandomVariable>, double>(new[]
                 {
                     _factory(new RandomLinear(s.Start, s.End, s.StartLevel, s.EndLevel))
-                }, s.Area/_totalArea));
-
-            return _owner(new RandomFork(new DiscreteSampleSet<IEnumerable<IRandomVariable>>(randoms)));
+                }, s.Area/_totalArea)).ToArray();           
+            
+            return randoms.Length > 0 ? _owner(new RandomFork(new DiscreteSampleSet<IEnumerable<IRandomVariable>>(randoms))) : _owner(new NoOpVariable());
         }
     }
 }

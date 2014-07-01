@@ -20,12 +20,7 @@ namespace Colossus.RandomVariables
         }
 
 
-        public static RandomTag<TValue> When<TValue>(this RandomTag<TValue> var, TValue category, params IRandomVariable[] ps)
-        {
-            var.Correlations.Add(category, ps);
-            return var;
-        }
-
+        
         /// <summary>
         /// Creates a correlation between the goals such that the marginal probability for the second goal is fixed.
         /// -1 corresponds to g1:false => g2:false and 1 g1:true => g2:true. A value between -1 and 1 is something in between (i.e. structure + randomness)

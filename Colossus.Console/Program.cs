@@ -16,8 +16,7 @@ namespace Colossus.Console
     {
 
         static void Main(string[] args)
-        {
-            
+        {            
             //Simple(args);
             //Online(args);
             Offline(args);
@@ -98,7 +97,7 @@ namespace Colossus.Console
                 Variables.Random("Country", Sets.Exponential(new[] { "Denmark", "Australia", "Chile", "Sweden" }, 0.8, 3)), // <- 80 % of the visits will com e from the three first countries
 
 
-                Variables.Year(2012, 2014).LinearTrend().Close(2014, 2), //Double as many visits will hit the site start 2014 as start of 2012                
+                Variables.Year(2012, 2014).LinearTrend(1, 2), //Double as many visits will hit the site start 2014 as start of 2012                
                 Variables.Hour().AddPeak(12, 1).AddPeak(20, 4), //Visits will have a sharp peak at lunch and a soft peak in the evening
                 Variables.DayOfWeek().AddPeak(1, 4) //Most visits occur Monday
                 );
@@ -163,12 +162,16 @@ namespace Colossus.Console
                     //For some reason the buying visits are more likely to be women
                 Variables.Goal(goals[2], 0.02).WhenTrue(Variables.Random<string>("Gender", Sets.Weight("Male", 0.2).Weight("Female", 0.8))),
 
+                
+                Variables.Random("Country", Sets.Exponential(
+                    new[]{"Denmark", "Brazil", "Australia", "Chile", "Sweden", "China", "Finland", "Portugal"}, 0.8, 3))
+                    .Correlate(country=>country == "Finland" || country == "Chile", 
+                        Variables.Random<string>("Gender", new object[,]{{"Male", 0.75}, {"Female", 0.25}})),
+
                 Variables.Random<string>("Gender", Sets.Weight("Male", 0.49).Weight("Female", 0.51)),   
             
-                Variables.Random("Country", Sets.Exponential(new[]{"Denmark", "Brazil", "Australia", "Chile", "Sweden", "China", "Finland", "Portugal"}, 0.8, 3)),
-
-                Variables.Year(2012, 2014).LinearTrend().Close(2014, 2), //Double as many visits will hit the site start 2014 as start of 2012                
-                Variables.Hour().BaseLevel(0.2).AddPeak(12, 1, shape: 3).AddPeak(20, 4, shape: -2), //Visits will have a sharp peak at lunch and a soft peak in the evening
+                Variables.Year(2012, 2014).DrawTrend().LineTo(2014, 2).Close(), //Double as many visits will hit the site start 2014 as start of 2012                
+                Variables.Hour().Uniform(1).AddPeak(12, 1, shape: 3).AddPeak(20, 4, shape: -2), //Visits will have a sharp peak at lunch and a soft peak in the evening
                 Variables.DayOfWeek().AddPeak(1, 4) //Most visits occur Monday
 
                 );
@@ -177,7 +180,7 @@ namespace Colossus.Console
                 Variables.Fixed("Country", "Germany"),
                 Variables.Hour().AddPeak(18, 3), // All Germans visit the site around 18:00
 
-                Variables.DayOfYear().Blend(.5).AddPeak(182.5, 100*1.5) //Germans prefer the site during summer
+                Variables.DayOfYear().Mute(.5).AddPeak(182.5, 100*1.5) //Germans prefer the site during summer
                 ).Override(baseGroup)
                 //Germans will buy a lot when Var 1 shows B
                 .When(null, "B").Then(Variables.Goal(goals[2], 0.4))
@@ -207,11 +210,11 @@ namespace Colossus.Console
             //Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             using (var f = File.CreateText("Visits.txt"))
             {
-                f.WriteTsvLine("Date", "Year", "Month", "Day", "DayOfWeek", "Hour", "Country", "Count");                
+                f.WriteTsvLine("Date", "Year", "Month", "Day", "DayOfWeek", "Hour", "Country", "Gender", "Count");                
                 foreach (var v in visits)
                 {
                     var date = v.StartDate.Date;
-                    f.WriteTsvLine(date.Date, date.Year, date.Month, date.Day, (int)date.DayOfWeek, date.Hour, v.Tags["Country"], 1);
+                    f.WriteTsvLine(date.Date, date.Year, date.Month, date.Day, (int)date.DayOfWeek, date.Hour, v.Tags["Country"], v.Tags["Gender"], 1);
                 }
             }                      
         }

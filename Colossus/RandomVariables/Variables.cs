@@ -52,7 +52,7 @@ namespace Colossus.RandomVariables
             return new TimeSeriesBuilder(r => new RandomDayOfYear(r), 0, 366);
         }
 
-        public static TimeSeriesBuilder Year(int min, int max)
+        public static TimeSeriesBuilder Year(double min, double max)
         {
             return new TimeSeriesBuilder(r => new RandomYear(r), min, max);
         }
