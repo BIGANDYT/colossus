@@ -17,9 +17,9 @@ namespace Colossus.Console
 
         static void Main(string[] args)
         {            
-            //Simple(args);
+            Simple(args);
             //Online(args);
-            Offline(args);
+            //Offline(args);
         }
 
         
@@ -29,9 +29,12 @@ namespace Colossus.Console
                         
 
             var baseUrl = "http://skynet.local";
+            //This is the URL for a page that contains a test.
             var testUrl = baseUrl + "/en/Solutions/Solution%201.aspx";
 
 
+            //These are the conversions the simulated visitors might make.
+            //The URLs points to pages that will trigger a goal.
             var goals = new[]
             {                
                 new UrlTriggeredGoal("Brochure Request", 2, baseUrl + "/en/Partners/Aoede.aspx"),
@@ -41,24 +44,27 @@ namespace Colossus.Console
 
 
             var config = new VisitGroup(
+                //These are the "normal" conversion rates (i.e. regardless of test experience)
                 Variables.Goal(goals[0], 0.1),
                 Variables.Goal(goals[1], 0.1),
-                Variables.Goal(goals[2], 0.05),
-                Variables.Fixed("Country", "England")
+                Variables.Goal(goals[2], 0.05)                
+
                               
                 ).When("Promo", "Original").Then(
+                    //When the component called "Promo" has the value "Original", the conversion rate for goal 1 will increase.
+                    //Experiences containing Promo->Original will be winners
                     Variables.Goal(goals[0], 0.5)
                 );
             
             
 
             var simpleSim = new VisitSimulator(config, new ExperienceCrawler(testUrl));            
+            var visits = simpleSim.Next(100).ToArray();
 
-            var visits = new List<Visit>();
-            foreach (var v in simpleSim.Next(100))
+            var test = simpleSim.ContextFactory.Tests.First();            
+            foreach (var v in visits)
             {                
-                output.WriteLine("Made a visit from {2} at {1} with value {0:N0}", v.Value, v.StartDate, v.Tags["Country"]);
-                visits.Add(v);                                
+                output.WriteLine("Made a visit for experience #{1} with value {0:N0}", v.Value, v.Experiences[test].Number);                                             
             }            
 
             output.WriteLine();

@@ -49,14 +49,14 @@
     <Compile Include="RandomPareto.cs" />
     <Compile Include="RandomVariables\IVariableBuilder.cs" />
     <Compile Include="RandomVariables\NoOpVariable.cs" />
-    <Compile Include="RandomVariables\TimeSeriesBuilder.cs" />
     <Compile Include="RandomVariables\RandomDayOfWeek.cs" />
     <Compile Include="RandomVariables\PeakVariable.cs" />
-    <Compile Include="RandomVariables\RandomHour.cs" />
     <Compile Include="RandomVariables\RandomDayOfYear.cs" />
+    <Compile Include="RandomVariables\RandomHour.cs" />
     <Compile Include="RandomVariables\RandomYear.cs" />
     <Compile Include="RandomVariables\TagVariable.cs" />
     <Compile Include="RandomVariables\ContinousVariable.cs" />
+    <Compile Include="RandomVariables\TimeSeriesBuilder.cs" />
     <Compile Include="RandomVariables\TrendBuilder.cs" />
     <Compile Include="RandomVariables\RandomFork.cs" />
     <Compile Include="RoundRobinVisitContextFactory.cs" />
