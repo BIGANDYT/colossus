@@ -47,6 +47,11 @@ namespace Colossus.RandomVariables
             return this;
         }
 
+        public TrendBuilder<TimeSeriesBuilder> DrawTrend(double startLevel = 1, double weight = 1)
+        {
+            return DrawTrend(Min, startLevel, weight);
+        }
+
         /// <summary>
         /// Draw trend lines
         /// </summary>
@@ -54,13 +59,13 @@ namespace Colossus.RandomVariables
         /// <param name="startLevel"></param>
         /// <param name="weight"></param>
         /// <returns></returns>
-        public TrendBuilder<TimeSeriesBuilder> DrawTrend(double offset = 0d, double startLevel = 1, double weight = 1)
-        {
+        public TrendBuilder<TimeSeriesBuilder> DrawTrend(double offset, double startLevel = 1, double weight = 1)
+        {            
             return new TrendBuilder<TimeSeriesBuilder>(var =>
             {
                 _parts.Add(new[] { var }, weight);
                 return this;
-            }, Min + offset, startLevel, Factory);
+            }, offset, startLevel, Factory);
         }
 
         public TimeSeriesBuilder LinearTrend(double startLevel = 1d, double endLevel = 2d)
