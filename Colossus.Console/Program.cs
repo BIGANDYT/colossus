@@ -55,23 +55,39 @@ namespace Colossus.Console
                     //Experiences containing Promo->Original will be winners
                     Variables.Goal(goals[0], 0.5)
                 );
-            
-            
 
-            var simpleSim = new VisitSimulator(config, new ExperienceCrawler(testUrl));            
-            var visits = simpleSim.Next(100).ToArray();
 
-            var test = simpleSim.ContextFactory.Tests.First();            
-            foreach (var v in visits)
-            {                
-                output.WriteLine("Made a visit for experience #{1} with value {0:N0}", v.Value, v.Experiences[test].Number);                                             
-            }            
+
+            output.WriteLine("Making requests for {0}", testUrl);
+            output.WriteLine();
+            var simpleSim = new VisitSimulator(config, new ExperienceCrawler(testUrl));
+            var visits = new List<Visit>();
+            foreach (var v in simpleSim.Next(50))
+            {
+                output.Write(".");
+                visits.Add(v);
+            }
 
             output.WriteLine();
-            output.WriteLine("Summary:");
+            output.WriteLine();
 
-            Summarize(output, simpleSim.ContextFactory.Tests.First(), visits);
-            
+            var test = simpleSim.ContextFactory.Tests.FirstOrDefault();
+            if (test != null)
+            {
+                foreach (var v in visits)
+                {
+                    output.WriteLine("Made a visit for experience #{1} with value {0:N0}", v.Value,
+                        v.Experiences[test].Number);
+                }
+
+                output.WriteLine();
+                output.WriteLine("Summary:");
+
+                Summarize(output, simpleSim.ContextFactory.Tests.First(), visits);
+            }
+
+            output.WriteLine();
+            output.WriteLine("Done.");
         }
         
         static void Online(string[] args)
@@ -122,7 +138,7 @@ namespace Colossus.Console
 
             var visits = new List<Visit>();
 
-            foreach (var v in simulator.Next(100))
+            foreach (var v in simulator.Next(1000))
             {                
                 output.Write(".");
                 visits.Add(v);
@@ -130,16 +146,19 @@ namespace Colossus.Console
 
             output.WriteLine();
 
-            var test = crawler.Tests.Values.First();
-            foreach (var country in visits.GroupBy(v => v.Tags["Country"]).OrderBy(g => g.Key))
+            var test = crawler.Tests.Values.FirstOrDefault();
+            if (test != null)
             {
-                output.WriteLine("\"{0}\":", country.Key);
-                Summarize(output, test, country);
-                output.WriteLine();
-            }
+                foreach (var country in visits.GroupBy(v => v.Tags["Country"]).OrderBy(g => g.Key))
+                {
+                    output.WriteLine("\"{0}\":", country.Key);
+                    Summarize(output, test, country);
+                    output.WriteLine();
+                }
 
-            output.WriteLine("All visits:");
-            Summarize(output, test, visits);
+                output.WriteLine("All visits:");
+                Summarize(output, test, visits);
+            }
         }
 
         static void Offline(string[] args)

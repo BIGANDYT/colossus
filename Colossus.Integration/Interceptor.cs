@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore;
 using Sitecore.Analytics;
+using Sitecore.Analytics.Diagnostics.PerformanceCounters;
 using Sitecore.Analytics.Testing;
 using Sitecore.Layouts;
 using Sitecore.Pipelines.RenderLayout;
@@ -15,14 +16,14 @@ namespace Colossus.Integration
 {
     public class Interceptor : RenderLayoutProcessor
     {
-        public static List<ITagDataProcessor> TagProcessors { get; private set; } 
+        public static List<ITagDataProcessor> TagProcessors { get; private set; }        
 
         static Interceptor()
         {
-            TagProcessors = new List<ITagDataProcessor>();     
-       
-            //TagProcessors.Add(new WhoIsProcessor());
-            //TagProcessors.Add(new TimeTravel());
+            TagProcessors = new List<ITagDataProcessor>();
+
+            TagProcessors.Add(new WhoIsProcessor());
+            TagProcessors.Add(new TimeTravel());
         }
 
 
@@ -33,7 +34,7 @@ namespace Colossus.Integration
             if (httpContext == null)
             {
                 return;
-            }
+            } 
 
             //Ensure that it's only the simulator console that can access this information
             //Other people shouldn't know what we're testing.            
@@ -85,6 +86,13 @@ namespace Colossus.Integration
                         Enumerable.Range(0, tc.Testset.Variables.Count).Select(i => tc[i]).ToArray().ToJson());
                 }
             }
+
+            //Tracker.Current.StartTracking();
+            //var p = Tracker.Current.Interaction.GetOrCreateCurrentPage();
+            //p.Duration = 1337;
+            
+            //HttpContext.Current.Response.Write(AnalyticsCount.CollectionRobotRequests.Value);            
+
         }
 
         JObject ParseHeaderValue(string value)

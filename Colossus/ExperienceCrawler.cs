@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -22,7 +23,11 @@ namespace Colossus
         Test ParseTest(WebClient wc)
         {
             Test test = null;
-            var testset = JsonConvert.DeserializeObject(wc.ResponseHeaders["X-Colossus-TestSet"]) as JObject;
+
+            var testsetHeader = wc.ResponseHeaders["X-Colossus-TestSet"];
+            var testset = string.IsNullOrEmpty(testsetHeader)
+                ? null
+                : JsonConvert.DeserializeObject(testsetHeader) as JObject;
             if (testset != null)
             {
                 var id = (string) testset["Id"];
@@ -62,6 +67,7 @@ namespace Colossus
 
                 ctx.Visit.UpdateState(test.GetExperience(vars));
             }
+            
 
             return ctx;
         }
@@ -96,6 +102,8 @@ namespace Colossus
 
             request.Headers.Add("X-Colossus-Visit", JsonConvert.SerializeObject(Visit.Tags));
             request.Headers.Add("X-Colossus-Request", JsonConvert.SerializeObject(RequestData));
+
+            (request as HttpWebRequest).UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36";
         }       
     }
 }

@@ -1,4 +1,5 @@
-﻿using Sitecore.Analytics;
+﻿using System;
+using Sitecore.Analytics;
 
 namespace Colossus.Integration
 {
@@ -12,6 +13,13 @@ namespace Colossus.Integration
             {
                 Tracker.Current.Interaction.StartDateTime = requestData.StartDate;
                 Tracker.Current.Interaction.EndDateTime = requestData.EndDate;
+
+                var page = Tracker.Current.CurrentPage;
+                if (page != null)
+                {
+                    page.DateTime = requestData.StartDate;
+                    page.Duration = (int) ((DateTime)requestData.EndDate - (DateTime)requestData.StartDate).TotalSeconds;
+                }
             }
         }
     }

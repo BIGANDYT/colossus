@@ -1,9 +1,14 @@
-﻿using Sitecore.Analytics;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Sitecore.Analytics;
 using Sitecore.Analytics.Model;
 
 namespace Colossus.Integration
 {
-    public class WhoIsProcessor: ITagDataProcessor
+    public class WhoIsProcessor : ITagDataProcessor
     {
         public void Process(dynamic visitTags, dynamic requestData)
         {
@@ -11,9 +16,9 @@ namespace Colossus.Integration
 
             if (visitTags.IP == null)
             {
-                var whois = new WhoIsInformation {Country = visitTags.Country, City = visitTags.City};
+                var whois = new WhoIsInformation { Country = visitTags.Country, City = visitTags.City };
                 Tracker.Current.Interaction.SetGeoData(whois);
-            }            
+            }
         }
     }
 }
