@@ -49,7 +49,7 @@ namespace Colossus
             
             
             visit.UpdateState(Test.Experiences[counter.Next[0]]);
-            return new VisitContext(visit);            
+            return new VisitContext(this, visit);            
         }
     }
 }

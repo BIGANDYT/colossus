@@ -6,12 +6,12 @@ namespace Colossus
 {
     public static class Sets
     {
-        public static DiscreteSampleSet<TValue>.SetBuilder<TValue> Weight<TValue>()
+        public static DiscreteSampleSet<TValue>.SetBuilder Weight<TValue>()
         {
-            return new DiscreteSampleSet<TValue>.SetBuilder<TValue>();
+            return new DiscreteSampleSet<TValue>.SetBuilder();
         }
 
-        public static DiscreteSampleSet<TValue>.SetBuilder<TValue> Weight<TValue>(TValue value, double weight)
+        public static DiscreteSampleSet<TValue>.SetBuilder Weight<TValue>(TValue value, double weight)
         {            
             return Weight<TValue>().Weight(value, weight);
         }
@@ -36,6 +36,7 @@ namespace Colossus
         {
             return new DistributedSampleSet<TValue>(values, RandomPareto.TopPerecentage(topPerecent, index, maxValue: values.Length));
         }
+
     }
 
     public abstract class SampleSet<TValue>
@@ -44,6 +45,8 @@ namespace Colossus
 
         public abstract TValue Sample();
     }
+
+    
 
     public class DistributedSampleSet<TValue> : SampleSet<TValue>
     {        
@@ -62,16 +65,16 @@ namespace Colossus
         }
     }
 
-    public class DiscreteSampleSet<T> : SampleSet<T>
+    public class DiscreteSampleSet<TValue> : SampleSet<TValue>
     {
-        public IEnumerable<KeyValuePair<T, double>> Items { get; private set; }
+        public IEnumerable<KeyValuePair<TValue, double>> Items { get; private set; }
         private readonly Random _random;
         
         private double[] _weights;
         private double _totalWeight;
         
 
-        public DiscreteSampleSet(IEnumerable<KeyValuePair<T, double>> items, Random random = null)
+        public DiscreteSampleSet(IEnumerable<KeyValuePair<TValue, double>> items, Random random = null)
         {
             Items = items.ToArray();
 
@@ -82,7 +85,7 @@ namespace Colossus
         }
 
 
-        public override T Sample()
+        public override TValue Sample()
         {
             var n = _random.NextDouble() * _totalWeight;
             for (var i = 0; i < _weights.Length; i++)
@@ -93,7 +96,7 @@ namespace Colossus
             throw new Exception("What?!");
         }
 
-        public class SetBuilder<TValue>
+        public class SetBuilder
         {
             private List<KeyValuePair<TValue, double>> _weights;
             public SetBuilder()
@@ -101,7 +104,7 @@ namespace Colossus
                 _weights = new List<KeyValuePair<TValue, double>>();
             }
 
-            public SetBuilder<TValue> Weight(TValue value, double weight)
+            public SetBuilder Weight(TValue value, double weight)
             {
                 _weights.Add(new KeyValuePair<TValue, double>(value, weight));
                 return this;
@@ -112,7 +115,7 @@ namespace Colossus
                 return new DiscreteSampleSet<TValue>(_weights);
             } 
 
-            public static implicit operator SampleSet<TValue>(SetBuilder<TValue> builder)
+            public static implicit operator SampleSet<TValue>(SetBuilder builder)
             {
                 return builder.Build();
             }

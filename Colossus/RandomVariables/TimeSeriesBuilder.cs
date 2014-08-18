@@ -63,9 +63,9 @@ namespace Colossus.RandomVariables
             }, offset ?? Min, startLevel, Factory);
         }
 
-        public TimeSeriesBuilder LinearTrend(double startLevel = 1d, double endLevel = 2d)
+        public TimeSeriesBuilder LinearTrend(double startLevel = 1d, double endLevel = 2d, double weight = 1)
         {
-            return DrawTrend(Min, startLevel).LineTo(Max, endLevel).Close();
+            return DrawTrend(Min, startLevel, weight: weight).LineTo(Max, endLevel).Close();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Colossus.RandomVariables
             CheckBuild();
 
             var range = (Max - Min);
-            var random = new TruncatedRandom(new RandomSkewNormal(0, scale, shape), -range / 2d, range / 2d, location + range);
+            var random = new TruncatedRandom(new RandomSkewNormal(0, scale, shape), -range / 2d, range / 2d, location + range);                       
 
             _parts.Add(new[] { Factory(random) }, weight);
             return this;

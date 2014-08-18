@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Colossus.RandomVariables
 {
-    public class RandomDayOfYear : ContinousVariable<Type>
+    public class RandomDayOfYear : ContinuousVariableBase<Type>
     {
         public RandomDayOfYear(IRandomDistribution random) : base(typeof(RandomDayOfYear), random)
         {

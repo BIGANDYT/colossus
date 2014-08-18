@@ -8,18 +8,11 @@ namespace Colossus
 {
     //TODO: Improve with randomly distributed durations, variations based on visit types etc.
     public class Clock
-    {
-        public TimeSpan Duration { get; set; }
-
-        public Clock()
-        {
-            Duration = TimeSpan.FromSeconds(1);
-        }
-
-        public void Update(VisitContext ctx)
+    {        
+        public void Update(VisitContext ctx, TimeSpan duration)
         {
             var start = ctx.LastVisit ?? ctx.Visit.StartDate;
-            var end = start + Duration;
+            var end = start + duration;
 
             ctx.RequestData["StartDate"] = start;
             ctx.RequestData["EndDate"] = end;

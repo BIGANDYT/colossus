@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -25,6 +26,11 @@ namespace Colossus.RandomVariables
             return new RandomTag<TValue>(key, new DiscreteSampleSet<TValue>(d));
         }
 
+        public static ContinuousVariable Continuous(string key, IRandomDistribution dist)
+        {
+            return new ContinuousVariable(key, dist);
+        }
+
         public static FixedTag<TValue> Fixed<TValue>(string key, TValue value)
         {
             return new FixedTag<TValue>(key, value);
@@ -35,7 +41,7 @@ namespace Colossus.RandomVariables
         {
             return new GoalVariable(goal, probability);
         }
-
+        
 
         public static TimeSeriesBuilder Hour()
         {
@@ -55,6 +61,16 @@ namespace Colossus.RandomVariables
         public static TimeSeriesBuilder Year(double min, double max)
         {
             return new TimeSeriesBuilder(r => new RandomYear(r), min, max);
+        }
+
+        public static RandomFork MultiSet(Action<DiscreteSampleSet<IEnumerable<IRandomVariable>>.SetBuilder> sets)
+        {
+
+            var builder = new DiscreteSampleSet<IEnumerable<IRandomVariable>>.SetBuilder();
+
+            sets(builder);
+
+            return new RandomFork(builder.Build());
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Colossus.Console
 
         static void Main(string[] args)
         {            
-            Simple(args);
-            //Online(args);
+            //Simple(args);
+            Online(args);
             //Offline(args);
         }
 
@@ -118,10 +118,14 @@ namespace Colossus.Console
 
                 Variables.Random("Country", Sets.Exponential(new[] { "Denmark", "Australia", "Chile", "Sweden" }, 0.8, 3)), // <- 80 % of the visits will com e from the three first countries
 
+                Variables.MultiSet(b=>b.Weight(Variables.Fixed("Keywords", "Horse"), 0.25)),
+                
 
-                Variables.Year(2012, 2014).LinearTrend(1, 2), //Double as many visits will hit the site start 2014 as start of 2012                
+                //Variables.Random("Keywords", Sets.Exponential(new[]{null, "Horse"}, 0.8, 3)),
+
+                Variables.Year(2012, 2014).LinearTrend(1, 2), //Double as many visits will hit the site start 2014 as start of 2012                                
                 Variables.Hour().AddPeak(12, 1).AddPeak(20, 4), //Visits will have a sharp peak at lunch and a soft peak in the evening
-                Variables.DayOfWeek().AddPeak(1, 4) //Most visits occur Monday
+                Variables.DayOfWeek().AddPeak(1, 4).Build() //Most visits occur Monday
                 );
 
             var germans = new VisitGroup(
@@ -186,7 +190,8 @@ namespace Colossus.Console
 
                     //For some reason the buying visits are more likely to be women
                 Variables.Goal(goals[2], 0.02).WhenTrue(Variables.Random<string>("Gender", Sets.Weight("Male", 0.2).Weight("Female", 0.8))),
-
+                
+                    
                 
                 Variables.Random("Country", Sets.Exponential(
                     new[]{"Denmark", "Brazil", "Australia", "Chile", "Sweden", "China", "Finland", "Portugal"}, 0.8, 3))
@@ -198,6 +203,7 @@ namespace Colossus.Console
                 Variables.Year(2012, 2014).DrawTrend().LineTo(2014, 2).Close(), //Double as many visits will hit the site start 2014 as start of 2012                
                 Variables.Hour().Uniform(1).AddPeak(12, 1, shape: 3).AddPeak(20, 4, shape: -2), //Visits will have a sharp peak at lunch and a soft peak in the evening
                 Variables.DayOfWeek().AddPeak(1, 4) //Most visits occur Monday
+
 
                 );
 

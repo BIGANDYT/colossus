@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Colossus.RandomVariables
 {
-    public abstract class ContinousVariable<TKey> : RandomVariable<TKey>
+    public abstract class ContinuousVariableBase<TKey> : RandomVariable<TKey>
     {
         public List<Func<double, IEnumerable<IRandomVariable>>> Correlations { get; private set; }
 
-        protected ContinousVariable(TKey key, IRandomDistribution random) : base(key, random)
+        protected ContinuousVariableBase(TKey key, IRandomDistribution random) : base(key, random)
         {
             Correlations = new List<Func<double, IEnumerable<IRandomVariable>>>();
         }
@@ -35,21 +35,21 @@ namespace Colossus.RandomVariables
 
         
 
-        public ContinousVariable<TKey> Correlate(double? min = null, double? max = null, params IRandomVariable[] variables)
+        public ContinuousVariableBase<TKey> Correlate(double? min = null, double? max = null, params IRandomVariable[] variables)
         {
             Correlations.Add(v => (!min.HasValue || v >= min) && (!max.HasValue || v < max) ? variables : new IRandomVariable[0]);
 
             return this;
         }
 
-        public ContinousVariable<TKey> Correlate(Func<double, bool> selector, params IRandomVariable[] variables)
+        public ContinuousVariableBase<TKey> Correlate(Func<double, bool> selector, params IRandomVariable[] variables)
         {
             Correlations.Add(v=>selector(v) ? variables : new IRandomVariable[0]);
 
             return this;
         }
 
-        public ContinousVariable<TKey> Correlate(Func<double, IEnumerable<IRandomVariable>> selector)
+        public ContinuousVariableBase<TKey> Correlate(Func<double, IEnumerable<IRandomVariable>> selector)
         {
             Correlations.Add(selector);
 

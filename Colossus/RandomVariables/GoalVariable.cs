@@ -24,12 +24,19 @@ namespace Colossus.RandomVariables
         public override IRandomValue Sample(SampleContext context = null)
         {
             double boost;
+            
             boost = context != null && context.GoalBoosts.TryGetValue(Key, out boost) ? boost : 1d;            
            
             var value = Random.Next() < boost*Probability;
+
+            if (context != null && context.Visit != null && Key.GetState(context.Visit) == GoalState.Unavailable)
+            {
+                value = false;
+            }
+
             return new RandomValue<bool>(this, value,
                 (visit) =>
-                {
+                {                    
                     if (!value && visit.Goals.Contains(Key))
                     {
                         visit.Goals.Remove(Key);

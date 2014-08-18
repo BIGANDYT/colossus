@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Colossus.RandomVariables
 {
-    public class RandomYear : ContinousVariable<Type>
+    public class RandomYear : ContinuousVariableBase<Type>
     {
         protected override void Action(Visit visit, double value)
         {

@@ -5,6 +5,10 @@ using Colossus.RandomVariables;
 
 namespace Colossus
 {
+    /// <summary>
+    /// TODO: We might as well use VisitData from Sitecore.Analytics. Why not?
+    /// </summary>
+
     public class Visit
     {
         public Dictionary<Test, Experience> Experiences { get; private set; }
@@ -20,6 +24,8 @@ namespace Colossus
         public HashSet<Goal> Goals { get; set; }
 
         public int Value { get; set; }
+
+        public List<VisitPage> Pages { get; set; }
 
 
         private Dictionary<object, IRandomValue> _variables = new Dictionary<object, IRandomValue>();
@@ -38,10 +44,12 @@ namespace Colossus
             Goals = new HashSet<Goal>();
             Tags = new Dictionary<string, object>();
             StartDate = new DateParts();
+            Pages = new List<VisitPage>();
         }
 
         public virtual void UpdateState(SampleContext context = null)
         {
+            context = context ?? new SampleContext {Visit = this};
             foreach (var var in Group.All().SelectMany(g => g.Variables)
                 .Sample(_variables, context).Values)
             {
@@ -65,12 +73,14 @@ namespace Colossus
 
             //Update test variables given group's overrides for the variables in the experience
             var ctx = Group.GetOverrides(ObservedLevels);
+            ctx.Visit = this;
+
             ctx.Sample(_testVariables);
 
             if (ctx.GoalBoosts.Count > 0)
             {
                 //Conversion rates are changed. Recalculate conversions when state is updated
-                _variables.Keys.OfType<Goal>().ToArray().ForEach(g=>_variables.Remove(g));
+                _variables.Keys.OfType<Goal>().Where(g=>g.GetState(this) != GoalState.Triggered).ToArray().ForEach(g=>_variables.Remove(g));
             }
 
             _variables.Merge(_testVariables, overwrite: true);            

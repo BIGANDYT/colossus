@@ -11,7 +11,7 @@ namespace Colossus
         public IEnumerable<Test> Tests { get; private set; }
         public VisitContext CreateContext(Visit visit)
         {
-            return new VisitContext(visit);
+            return new VisitContext(this, visit);
         }
     }
 }

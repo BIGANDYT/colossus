@@ -128,6 +128,13 @@ namespace Colossus.RandomVariables
                 }
             }
             return values;
-        }        
+        }
+
+
+        public static DiscreteSampleSet<IEnumerable<TValue>>.SetBuilder Weight<TValue>(
+            this DiscreteSampleSet<IEnumerable<TValue>>.SetBuilder builder, TValue value, double weight)
+        {
+            return builder.Weight(new[] {value}, weight);
+        }
     }
 }

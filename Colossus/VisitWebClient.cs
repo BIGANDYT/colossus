@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Colossus
 {
@@ -37,6 +40,8 @@ namespace Colossus
                 throw new Exception("The site didn't return as expected. Is the interceptor installed?");
             }
 
+            Context.ParseResponse(response);
+            
             return response;
         }
     }

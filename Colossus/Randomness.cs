@@ -17,6 +17,7 @@ namespace Colossus
 
         [ThreadStatic]
         private static Random _random;
+        
 
         public static Random Random
         {
@@ -30,6 +31,11 @@ namespace Colossus
 
                 return _random;
             }
+        }
+
+        public static void Reset(int? seed = null)
+        {
+            _random = new Random(seed ?? Seed);
         }
     }
 
@@ -190,7 +196,7 @@ namespace Colossus
             do
             {
                 value = Inner.Next();
-            } while (value < Min || value >= Max);
+            } while (value < Min || value >= Max);          
 
             return (value + Offset)%(Max - Min);            
         }

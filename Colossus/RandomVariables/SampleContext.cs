@@ -8,6 +8,8 @@ namespace Colossus.RandomVariables
 {
     public class SampleContext
     {
+        public Visit Visit { get; set; }
+
         public Dictionary<Goal, double> GoalBoosts { get; set; }
 
         public SampleContext()

@@ -7,9 +7,17 @@ namespace Colossus
 {
     public class VisitGroup
     {
+        private IPageGenerator _pageGenerator;
         public VisitGroup BaseGroup { get; set; }
         public string Name { get; set; }
-        
+
+
+        public IPageGenerator PageGenerator
+        {
+            get { return _pageGenerator ?? BaseGroup.PageGenerator; }
+            set { _pageGenerator = value; }
+        }
+
         public List<IRandomVariable> Variables { get; set; }
 
         public List<ExperienceOverride> ExperienceOverrides { get; set; }
@@ -20,6 +28,8 @@ namespace Colossus
             {
                 Group = this
             };
+
+
             v.UpdateState();
             
             return v;

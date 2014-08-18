@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 
 namespace Colossus.RandomVariables
 {
-    public class RandomHour : ContinuousVariableBase<Type>
+    public class ContinuousVariable : ContinuousVariableBase<string>
     {
-        public RandomHour(IRandomDistribution random) : base(typeof(RandomHour), random)
+        public ContinuousVariable(string key, IRandomDistribution random) : base(key, random)
         {
         }
 
         protected override void Action(Visit visit, double value)
         {
-            visit.StartDate.Hour = value;
+            visit.Tags[Key] = value;
         }
     }
 }
