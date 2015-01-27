@@ -10,13 +10,13 @@ namespace Colossus
 
         public List<IRandomVariable> Variables { get; set; }
 
-        public Dictionary<Goal, double> GoalBoosts{ get; set; }
+        //public Dictionary<Goal, double> GoalBoosts{ get; set; }
 
         public ExperienceOverride()
         {
             Factors = new List<ExperienceFactorMatcher>();
             Variables = new List<IRandomVariable>();
-            GoalBoosts = new Dictionary<Goal, double>();
+            //GoalBoosts = new Dictionary<Goal, double>();
         }
 
         public bool Matches(Dictionary<ExperienceFactor, int> levels)
@@ -59,11 +59,11 @@ namespace Colossus
                 return _owner;
             }
 
-            public Builder Boost(Goal goal, double boost)
-            {
-                _override.GoalBoosts[goal] = boost;
-                return this;
-            }
+            //public Builder Boost(Goal goal, double boost)
+            //{
+            //    _override.GoalBoosts[goal] = boost;
+            //    return this;
+            //}
 
             public VisitGroup End(params IRandomVariable[] variables)
             {

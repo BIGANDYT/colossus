@@ -1,25 +1,29 @@
 ﻿using System;
+using Newtonsoft.Json.Linq;
 using Sitecore.Analytics;
 
 namespace Colossus.Integration
 {
     public class TimeTravel : ITagDataProcessor
     {
-        public void Process(dynamic visitTags, dynamic requestData)
+        public void Process(JObject visitTags, JObject requestData)
         {
             if (Tracker.Current == null) return;
 
-            if (requestData.StartDate != null)
+            if (visitTags["StartDate"] != null)
             {
-                Tracker.Current.Interaction.StartDateTime = requestData.StartDate;
-                Tracker.Current.Interaction.EndDateTime = requestData.EndDate;
-
+                Tracker.Current.Interaction.StartDateTime = visitTags["StartDate"].Value<DateTime>();
+            }
+            
+            if (requestData["StartDate"] != null)
+            {                
                 var page = Tracker.Current.CurrentPage;
                 if (page != null)
                 {
-                    page.DateTime = requestData.StartDate;
-                    page.Duration = (int) ((DateTime)requestData.EndDate - (DateTime)requestData.StartDate).TotalSeconds;
+                    page.DateTime = requestData.Value<DateTime>("StartDate");
+                    page.Duration = (int) (requestData.Value<DateTime>("EndDate") - requestData.Value<DateTime>("StartDate")).TotalMilliseconds;
                 }
+                Tracker.Current.Interaction.EndDateTime = requestData.Value<DateTime>("EndDate");
             }
         }
     }

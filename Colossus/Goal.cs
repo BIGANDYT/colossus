@@ -19,14 +19,10 @@ namespace Colossus
             GoalGroup = new GoalGroup {Id = Guid.NewGuid(), Name = name};
         }
 
-        public virtual GoalState GetState(Visit visit)
-        {
-            return GoalState.Available;
-        }
-
+        
         public virtual void Convert(VisitContext visitContext)
         {
             
-        }
+        }        
     }
 }

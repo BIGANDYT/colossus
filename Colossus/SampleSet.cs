@@ -6,6 +6,11 @@ namespace Colossus
 {
     public static class Sets
     {
+        public static SampleSet<TValue> Single<TValue>(TValue value)
+        {
+            return new DiscreteSampleSet<TValue>.SetBuilder().Weight(value, 1).Build();
+        }
+
         public static DiscreteSampleSet<TValue>.SetBuilder Weight<TValue>()
         {
             return new DiscreteSampleSet<TValue>.SetBuilder();
@@ -27,9 +32,9 @@ namespace Colossus
             return new DistributedSampleSet<TValue>(values);
         }
 
-        public static SampleSet<TValue> Exponential<TValue>(TValue[] values, double topPerecent, int index)
+        public static SampleSet<TValue> Exponential<TValue>(TValue[] values, double topPercent, int index)
         {
-            return new DistributedSampleSet<TValue>(values, RandomExponential.TopPerecentage(topPerecent, index, values.Length));
+            return new DistributedSampleSet<TValue>(values, RandomExponential.TopPerecentage(topPercent, index, values.Length));
         }
 
         public static SampleSet<TValue> Pareto<TValue>(TValue[] values, double topPerecent, int index)
@@ -39,11 +44,66 @@ namespace Colossus
 
     }
 
-    public abstract class SampleSet<TValue>
+    public interface ISampleSet<out TValue>
+    {
+        TValue Sample();
+    }
+    public abstract class SampleSet<TValue> : IRandomDistribution, ISampleSet<TValue>
     {
         public TValue[] Values { get; protected set; }
 
         public abstract TValue Sample();
+
+        public double Next()
+        {
+            return Convert.ToDouble(Sample());
+        }
+
+        public static implicit operator SampleSet<TValue>(TValue value)
+        {
+            return new SingleSet<TValue>(value);
+        }
+
+        public static implicit operator Func<TValue>(SampleSet<TValue> set)
+        {
+            return set.Sample;
+        }
+    }
+
+    public class SingleSet<TValue> : SampleSet<TValue>
+    {
+        public TValue Value { get; set; }
+        public SingleSet(TValue value)
+        {
+            Value = value;
+        }
+
+        public override TValue Sample()
+        {
+            return Value;
+        }
+    }
+
+    public class NestedSet<TValue> : SampleSet<TValue>
+    {
+        public SampleSet<TValue> Set { get; set; }
+
+        public TValue Value { get; set; }
+
+        public NestedSet(SampleSet<TValue> set)
+        {
+            Set = set;
+        }
+
+        public NestedSet(TValue value)
+        {
+            Value = value;
+        }
+
+        public override TValue Sample()
+        {
+            return Set != null ? Set.Sample() : Value;
+        }        
     }
 
     
@@ -119,7 +179,6 @@ namespace Colossus
             {
                 return builder.Build();
             }
-        }
-
+        }        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security;
@@ -13,7 +14,7 @@ namespace Colossus
     public static class Randomness
     {
         private static int _increment;
-        public static int Seed = 1305454;
+        public static int Seed = 1338;
 
         [ThreadStatic]
         private static Random _random;
@@ -25,8 +26,7 @@ namespace Colossus
             {
                 if (_random == null)
                 {
-                    Interlocked.Increment(ref _increment);
-                    _random = new Random(Seed + _increment);
+                    _random = new Random(Seed + Interlocked.Increment(ref _increment));                    
                 }
 
                 return _random;
@@ -98,6 +98,8 @@ namespace Colossus
 
         public double Next()
         {
+            if (Min == Max) return Min;
+
             if (Start == End)
             {
                 return Min + (Max - Min) * _random.NextDouble();
@@ -105,6 +107,11 @@ namespace Colossus
 
             var u = _random.NextDouble() * (Cdf(1) - Cdf(0));
             return Min + (Max - Min) * Quantile(u);
+        }
+
+        public static RandomLinear Fixed(double value)
+        {
+            return new RandomLinear(value, value);
         }
     }
 
@@ -174,6 +181,7 @@ namespace Colossus
             return (u0 >= 0 ? u1 : -u1) * Scale + Location;
         }
     }
+    
 
     public class TruncatedRandom : IRandomDistribution
     {
@@ -191,14 +199,31 @@ namespace Colossus
         }
 
         public double Next()
-        {
+        {            
             double value;
             do
             {
                 value = Inner.Next();
             } while (value < Min || value >= Max);          
 
-            return (value + Offset)%(Max - Min);            
+            return Min + (value - Min + Offset)%(Max - Min);            
+        }
+    }
+
+    public class RandomTransformation : IRandomDistribution
+    {
+        public IRandomDistribution Distribution { get; set; }
+        public Func<double, double> Transformation { get; set; }
+
+        public RandomTransformation(IRandomDistribution distribution, Func<double, double> transformation)
+        {
+            Distribution = distribution;
+            Transformation = transformation;
+        }
+
+        public double Next()
+        {
+            return Transformation(Distribution.Next());
         }
     }    
 }

@@ -4,6 +4,6 @@
     {
         Unavailable,
         Available,
-        Triggered
+        Converted
     }
 }

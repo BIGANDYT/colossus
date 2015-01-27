@@ -9,7 +9,7 @@ namespace Colossus.RandomVariables
     public class RandomYear : ContinuousVariableBase<Type>
     {
         protected override void Action(Visit visit, double value)
-        {
+        {            
             visit.StartDate.Year = value;
         }
 

@@ -29,277 +29,388 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nerva Demo|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\..\..\Nerva\Demo\Heineken\Sitecore 8.0 rev. 140828\Website\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="FiftyOne.Foundation">
+      <HintPath>..\FiftyOne.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Aggregation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Aggregation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Automation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Automation.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Abstractions">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Abstractions.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.Automation.Aggregation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Automation.Aggregation.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.Automation.MongoDB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Automation.MongoDB.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Aggregation">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Aggregation.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Automation">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Automation.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.DataAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.DataAccess.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Automation.Aggregation">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Automation.Aggregation.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Model.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Automation.MongoDB">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Automation.MongoDB.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.MongoDB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.MongoDB.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Core">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Core.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.OmniChannel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.OmniChannel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.DataAccess">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.DataAccess.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.Outcome, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Outcome.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Model">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Model.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.Processing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Processing.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.MongoDB">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.MongoDB.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.RobotDetection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.RobotDetection.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Processing">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Processing.dll</HintPath>
+    <Reference Include="Sitecore.Analytics.Sql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Analytics.Sql.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.RobotDetection">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.RobotDetection.dll</HintPath>
+    <Reference Include="Sitecore.Apps.Loader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Apps.Loader.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Sql">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.Sql.dll</HintPath>
+    <Reference Include="Sitecore.Apps.TagInjection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Apps.TagInjection.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.TestFramework">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Analytics.TestFramework.dll</HintPath>
+    <Reference Include="Sitecore.Buckets, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Buckets.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Apps.Loader">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Apps.Loader.dll</HintPath>
+    <Reference Include="Sitecore.Buckets.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Buckets.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Apps.TagInjection">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Apps.TagInjection.dll</HintPath>
+    <Reference Include="Sitecore.Cintel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Cintel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Automation.MarketingAutomation">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Automation.MarketingAutomation.dll</HintPath>
+    <Reference Include="Sitecore.Cintel.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Cintel.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Buckets">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Buckets.dll</HintPath>
+    <Reference Include="Sitecore.Client, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Buckets.Client">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Buckets.Client.dll</HintPath>
+    <Reference Include="Sitecore.Client.LicenseOptions, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Client.LicenseOptions.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Cintel">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cintel.dll</HintPath>
+    <Reference Include="Sitecore.Cloud.Nexus, Version=2.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Cloud.Nexus.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Cintel.Client">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cintel.Client.dll</HintPath>
+    <Reference Include="Sitecore.Cloud.RestClient, Version=3.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Cloud.RestClient.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Client">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Client.dll</HintPath>
+    <Reference Include="Sitecore.Cloud.ServiceModel, Version=3.0.29.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Cloud.ServiceModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Cloud.Nexus">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.Nexus.dll</HintPath>
+    <Reference Include="Sitecore.Cloud.Xdb, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Cloud.Xdb.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Cloud.ServiceModel">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.ServiceModel.dll</HintPath>
+    <Reference Include="Sitecore.Cloud.Xdb.ServiceModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Cloud.Xdb.ServiceModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Cloud.Xdb">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.Xdb.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Cloud.Xdb.ServiceModel">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Cloud.Xdb.ServiceModel.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ContentSearch.Analytics.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.Analytics.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ContentSearch.Analytics.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Analytics">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Analytics.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ContentSearch.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Analytics.Client">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Analytics.Client.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ContentSearch.Linq.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Client">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Client.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.Linq.Lucene, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ContentSearch.Linq.Lucene.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Linq">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Linq.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.LuceneProvider, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Linq.Lucene">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.Linq.Lucene.dll</HintPath>
+    <Reference Include="Sitecore.ExperienceEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ExperienceEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.LuceneProvider">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
+    <Reference Include="Sitecore.ExperienceEditor.Speak, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ExperienceEditor.Speak.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ExperienceEditor.Core">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ExperienceEditor.Core.dll</HintPath>
+    <Reference Include="Sitecore.ExperienceEditor.Speak.Ribbon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ExperienceEditor.Speak.Ribbon.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceInsights, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Sitecore.ExperienceInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceInsights.Aggregation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Sitecore.ExperienceInsights.Aggregation.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceInsights.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Sitecore.ExperienceInsights.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.ExperienceEditor.UI">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ExperienceEditor.UI.dll</HintPath>
+    <Reference Include="Sitecore.ItemWebApi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ItemWebApi.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ItemWebApi">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.ItemWebApi.dll</HintPath>
+    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Kernel.dll</HintPath>
+    <Reference Include="Sitecore.LaunchPad, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.LaunchPad.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Logging">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Logging.dll</HintPath>
+    <Reference Include="Sitecore.ListManagement.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ListManagement.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.dll</HintPath>
+    <Reference Include="Sitecore.ListManagement.ContentSearch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ListManagement.ContentSearch.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc.Analytics">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.Analytics.dll</HintPath>
+    <Reference Include="Sitecore.ListManagement.ContentSearch.Mongo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ListManagement.ContentSearch.Mongo.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc.DeviceSimulator">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.DeviceSimulator.dll</HintPath>
+    <Reference Include="Sitecore.ListManagement.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ListManagement.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc.ExperienceEditor">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Mvc.ExperienceEditor.dll</HintPath>
+    <Reference Include="Sitecore.ListManagement.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.ListManagement.Services.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="sitecore.nexus">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\sitecore.nexus.dll</HintPath>
+    <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Logging.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.NVelocity">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.NVelocity.dll</HintPath>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Mvc.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Oracle">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Oracle.dll</HintPath>
+    <Reference Include="Sitecore.Mvc.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Mvc.Analytics.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Publishing.WebDeploy">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Publishing.WebDeploy.dll</HintPath>
+    <Reference Include="Sitecore.Mvc.DeviceSimulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Mvc.DeviceSimulator.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Security.AntiCsrf">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Security.AntiCsrf.dll</HintPath>
+    <Reference Include="Sitecore.Mvc.ExperienceEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Mvc.ExperienceEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Services.Client">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Client.dll</HintPath>
+    <Reference Include="sitecore.nexus, Version=1.0.0.4404, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\sitecore.nexus.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Services.Core">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Core.dll</HintPath>
+    <Reference Include="Sitecore.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Services.Infrastructure">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Infrastructure.dll</HintPath>
+    <Reference Include="Sitecore.Oracle, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Oracle.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Services.Infrastructure.Sitecore">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
+    <Reference Include="Sitecore.Publishing.WebDeploy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Publishing.WebDeploy.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.SessionProvider">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.dll</HintPath>
+    <Reference Include="Sitecore.Security.AntiCsrf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Security.AntiCsrf.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.SessionProvider.Memory">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.Memory.dll</HintPath>
+    <Reference Include="Sitecore.SegmentBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.SegmentBuilder.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.SessionProvider.MongoDB">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.MongoDB.dll</HintPath>
+    <Reference Include="Sitecore.Services.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Services.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.SessionProvider.Sql">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.Sql.dll</HintPath>
+    <Reference Include="Sitecore.Services.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Services.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.SessionProvider.Test">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.SessionProvider.Test.dll</HintPath>
+    <Reference Include="Sitecore.Services.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Services.Infrastructure.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Shell.MarketingAutomation">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Shell.MarketingAutomation.dll</HintPath>
+    <Reference Include="Sitecore.Services.Infrastructure.Sitecore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Applications">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Applications.dll</HintPath>
+    <Reference Include="Sitecore.SessionProvider, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.SessionProvider.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Charting">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Charting.dll</HintPath>
+    <Reference Include="Sitecore.SessionProvider.Memory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.SessionProvider.Memory.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Client">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Client.dll</HintPath>
+    <Reference Include="Sitecore.SessionProvider.MongoDB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.SessionProvider.MongoDB.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.ItemWebApi">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.ItemWebApi.dll</HintPath>
+    <Reference Include="Sitecore.SessionProvider.Sql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.SessionProvider.Sql.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Mvc">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Mvc.dll</HintPath>
+    <Reference Include="Sitecore.Shell.MarketingAutomation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Shell.MarketingAutomation.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Ribbon">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Ribbon.dll</HintPath>
+    <Reference Include="Sitecore.Speak.Applications, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Speak.Applications.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Server">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Server.dll</HintPath>
+    <Reference Include="Sitecore.Speak.Charting, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Speak.Charting.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Web">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Speak.Web.dll</HintPath>
+    <Reference Include="Sitecore.Speak.Web, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Speak.Web.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Update">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Update.dll</HintPath>
+    <Reference Include="Sitecore.Update, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Update.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Zip">
-      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140619\lib\net40\Sitecore.Zip.dll</HintPath>
+    <Reference Include="Sitecore.Zip, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Binaries.Core.8.0.0.140820\lib\net40\Sitecore.Zip.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -310,9 +421,24 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZeroProximity.DeviceDetection">
+      <HintPath>..\packages\ZeroProximity.DeviceDetection.1.0.0.2\lib\NET35\ZeroProximity.DeviceDetection.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CampaignProcessor.cs" />
+    <Compile Include="Dimensions\ByChannel.cs" />
+    <Compile Include="Dimensions\ByChannelType.cs" />
+    <Compile Include="Dimensions\ByDeviceType.cs" />
+    <Compile Include="Dimensions\ByGoalCategory.cs" />
+    <Compile Include="Dimensions\ByPatternRenamed.cs" />
+    <Compile Include="Dimensions\BySubChannel.cs" />
+    <Compile Include="Dimensions\MockDataDimension.cs" />
+    <Compile Include="NervaDemoProcessor.cs" />
+    <Compile Include="NervaDemo\NervaDemoMockData.cs" />
+    <Compile Include="ProfileProcessor.cs" />
     <Compile Include="TagProcessor.cs" />
+    <Compile Include="TestDimension.cs" />
     <Compile Include="TimeTravel.cs" />
     <Compile Include="Interceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

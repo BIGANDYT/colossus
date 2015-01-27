@@ -6,6 +6,11 @@ namespace Colossus.RandomVariables
 {
     public static class Variables
     {
+        public static RandomTag<TValue> Random<TValue>(string key, Func<TValue> getter)
+        {
+            return new RandomTag<TValue>(key, getter);
+        }
+
         public static RandomTag<TValue> Random<TValue>(string key, SampleSet<TValue> set)
         {
             return new RandomTag<TValue>(key, set);
@@ -60,7 +65,7 @@ namespace Colossus.RandomVariables
 
         public static TimeSeriesBuilder Year(double min, double max)
         {
-            return new TimeSeriesBuilder(r => new RandomYear(r), min, max);
+            return new TimeSeriesBuilder(r => new RandomYear(r), min, max, false);
         }
 
         public static RandomFork MultiSet(Action<DiscreteSampleSet<IEnumerable<IRandomVariable>>.SetBuilder> sets)

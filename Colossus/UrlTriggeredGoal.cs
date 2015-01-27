@@ -35,23 +35,19 @@ namespace Colossus
 
             return url;
         }
-
-        public override GoalState GetState(Visit visit)
-        {
-            var url = GetUrl(visit);
-            return visit.Pages.Any(p => p.Url == url)
-                ? GoalState.Triggered
-                : GoalState.Available;
-        }
-
+        
         public override void Convert(VisitContext visitContext)
-        {            
-            visitContext.Visit.Pages.Add(new VisitPage
+        {
+            var wc = visitContext.WebClient;
+            if (wc != null)
             {
-                Url = GetUrl(visitContext.Visit),
-                Duration = TimeSpan.FromSeconds(0.1)
-            });
-
+                wc.DownloadString(ConversionUrl);                
+            }
+            //visitContext.Visit.Pages.Add(new VisitPage
+            //{
+            //    Url = GetUrl(visitContext.Visit),
+            //    Duration = TimeSpan.FromSeconds(0.1)
+            //});
         }
     }
 }

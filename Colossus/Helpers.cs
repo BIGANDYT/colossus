@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Colossus.Pages;
 using Colossus.RandomVariables;
 
 namespace Colossus
@@ -23,6 +24,36 @@ namespace Colossus
         {
             return new ExperienceOverride.Builder(group).And(factorName, levelName);
         }
+
+        public static VisitGroup Actions(this VisitGroup group, Action<DiscreteSampleSet<VisitAction>.SetBuilder> builder)
+        {            
+
+            var set = new DiscreteSampleSet<VisitAction>.SetBuilder();
+            builder(set);
+            var action = new VisitActionSet(set.Build());            
+            group.Action = action;
+            return group;
+        }
+
+        public static VisitGroup Actions(this VisitGroup group, params VisitAction[] actions)
+        {
+            group.Action = new VisitActionList {Actions = actions.ToList()};
+
+            return group;
+        }
+
+        public static VisitGroup DefaultDuration(this VisitGroup group, IRandomDistribution duration)
+        {
+            group.Action.Duration = duration;
+
+            return group;
+        }
+
+        //public static VisitGroup Pages(this VisitGroup group, IPageSequenceGenerator pages)
+        //{
+        //    group.PageSequenceGenerator = pages;
+        //    return group;
+        //}
 
         
         public static VisitGroup Override(this VisitGroup group, VisitGroup baseGroup)
@@ -93,6 +124,18 @@ namespace Colossus
                 }
             }
         }
+
+        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, Func<TValue> initializer)
+        {
+            TValue val;
+            if (!dict.TryGetValue(key, out val))
+            {
+                dict.Add(key, val = initializer());
+            }
+
+            return val;
+        }
+        
 
         public static Dictionary<TKey, TValue> ToDictionary<TItem, TKey, TValue>(
             this IEnumerable<TItem> items, Func<TItem, int, TKey> key, Func<TItem, int, TValue> val)

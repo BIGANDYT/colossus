@@ -1,8 +1,10 @@
-﻿namespace Colossus.Integration
+﻿using Newtonsoft.Json.Linq;
+
+namespace Colossus.Integration
 {
     public interface ITagDataProcessor
     {
-        void Process(dynamic visitTags, dynamic requestData);
+        void Process(JObject visitTags, JObject requestData);
     }
 
  

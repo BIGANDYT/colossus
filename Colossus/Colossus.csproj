@@ -29,7 +29,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nerva Demo|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Nerva Demo\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -46,7 +58,13 @@
   <ItemGroup>
     <Compile Include="Clock.cs" />
     <Compile Include="DateParts.cs" />
+    <Compile Include="Geo\City.cs" />
     <Compile Include="PageGenerator.cs" />
+    <Compile Include="Pages\PageAction.cs" />
+    <Compile Include="Pages\RandomWalk.cs" />
+    <Compile Include="Pages\VisitAction.cs" />
+    <Compile Include="Pages\VisitActionList.cs" />
+    <Compile Include="Pages\VisitActionSet.cs" />
     <Compile Include="RandomPareto.cs" />
     <Compile Include="RandomVariables\ContinuousVariable.cs" />
     <Compile Include="RandomVariables\IVariableBuilder.cs" />
@@ -64,6 +82,8 @@
     <Compile Include="RoundRobinVisitContextFactory.cs" />
     <Compile Include="SimpleVisitContextFactory.cs" />
     <Compile Include="Statistics.cs" />
+    <Compile Include="Symposium\HeinekenWalk.cs" />
+    <Compile Include="Symposium\Pages.cs" />
     <Compile Include="UrlTriggeredGoal.cs" />
     <Compile Include="VisitPage.cs" />
     <Compile Include="VisitWebClient.cs">
@@ -107,7 +127,7 @@
     <Compile Include="RandomVariables\RandomTag.cs" />
     <Compile Include="Visit.cs" />
     <Compile Include="VisitGroup.cs" />
-    <Compile Include="ExperienceSimulator.cs" />
+    <Compile Include="VisitSimulator.cs" />
     <Compile Include="WebVisitContext.cs" />
   </ItemGroup>
   <ItemGroup>

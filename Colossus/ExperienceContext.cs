@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Colossus
 {
@@ -13,33 +14,44 @@ namespace Colossus
 
         public DateTime? LastVisit { get; set; }
 
-        public virtual void VisitPage(VisitPage page)
-        {
-            
-        }
+        public string LastResponse { get; set; }
 
+        public HashSet<Goal> ConvertedGoals { get; set; }
+
+        public Clock Clock { get; set; }
+
+        public virtual WebClient WebClient
+        {
+            get { return null; }
+        }
+        
         public VisitContext(IVisitContextFactory factory, Visit visit)
         {
             Factory = factory;
             Visit = visit;
+            ConvertedGoals = new HashSet<Goal>();
+            Clock = new Clock(this);
         }
 
-        public virtual void Commit()
-        {
-            //This can be made more "realistic"
-            //Task: Given a set of goals, find a realistic visit path that converts those.
-            //Maybe, include duration. And shortest path.
 
-            foreach (var goal in Visit.Goals)
+        public virtual void Commit()
+        {           
+            if (Visit.Action != null)
             {
-                goal.Convert(this);
+                Visit.Action.Execute(this);
             }
 
-            if (Visit.Pages != null)
+            ConvertGoals();
+        }
+
+        public void ConvertGoals()
+        {
+            foreach (var goal in Visit.Goals)
             {
-                foreach (var page in Visit.Pages)
+                if (!ConvertedGoals.Contains(goal))
                 {
-                    VisitPage(page);
+                    goal.Convert(this);
+                    ConvertedGoals.Add(goal);
                 }
             }
         }

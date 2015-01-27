@@ -9,12 +9,18 @@ namespace Colossus.RandomVariables
         public List<Func<TValue, IEnumerable<IRandomVariable>>> Correlations { get; private set; }
 
 
-        public SampleSet<TValue> Set { get; set; }
+        public Func<TValue> Getter { get; set; }
 
         public RandomTag(string key, SampleSet<TValue> values)
+            : this(key, values.Sample)
+        {
+            
+        }
+
+        public RandomTag(string key, Func<TValue> values)
             : base(key)
         {
-            Set = values;
+            Getter = values;
             Correlations = new List<Func<TValue, IEnumerable<IRandomVariable>>>();
         }
 
@@ -31,7 +37,7 @@ namespace Colossus.RandomVariables
 
         public override IRandomValue Sample(SampleContext context = null)
         {            
-            var value = Set.Sample();
+            var value = Getter();
             if (value == null) return null;
 
             return new RandomValue<TValue>(this, value, v=>v.Tags[Key] = value, GetCorrelations(value));

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Colossus.Pages;
 using Colossus.RandomVariables;
 
 namespace Colossus
@@ -11,6 +12,8 @@ namespace Colossus
 
     public class Visit
     {
+        public VisitAction Action { get; set; }
+
         public Dictionary<Test, Experience> Experiences { get; private set; }
 
         public Dictionary<ExperienceFactor, int> ObservedLevels { get; private set; }
@@ -25,11 +28,13 @@ namespace Colossus
 
         public int Value { get; set; }
 
-        public List<VisitPage> Pages { get; set; }
+        //public List<VisitPage> Pages { get; set; }
 
 
         private Dictionary<object, IRandomValue> _variables = new Dictionary<object, IRandomValue>();
-        private Dictionary<object, IRandomValue> _testVariables = new Dictionary<object, IRandomValue>();
+
+        //This should be per test, right?
+        private Dictionary<Test, Dictionary<object, IRandomValue>> _testVariables = new Dictionary<Test, Dictionary<object, IRandomValue>>();
         
 
         public Dictionary<ExperienceFactor, int> Adjust(Dictionary<ExperienceFactor, int> factors)
@@ -44,7 +49,7 @@ namespace Colossus
             Goals = new HashSet<Goal>();
             Tags = new Dictionary<string, object>();
             StartDate = new DateParts();
-            Pages = new List<VisitPage>();
+            //Pages = new List<VisitPage>();
         }
 
         public virtual void UpdateState(SampleContext context = null)
@@ -57,6 +62,12 @@ namespace Colossus
             }
         }
 
+
+        //public virtual UpdateState(SampleContext ctx)
+        //{
+            
+        //}
+
         /// <summary>
         /// Update state according to experience and the group's ExperienceOverrides
         /// </summary>
@@ -67,7 +78,6 @@ namespace Colossus
             if (Experiences.ContainsKey(experience.Test)) return;
 
             Experiences.Add(experience.Test, experience);
-
             
             ObservedLevels.Merge(Adjust(experience.Levels));
 
@@ -75,17 +85,34 @@ namespace Colossus
             var ctx = Group.GetOverrides(ObservedLevels);
             ctx.Visit = this;
 
-            ctx.Sample(_testVariables);
 
-            if (ctx.GoalBoosts.Count > 0)
-            {
-                //Conversion rates are changed. Recalculate conversions when state is updated
-                _variables.Keys.OfType<Goal>().Where(g=>g.GetState(this) != GoalState.Triggered).ToArray().ForEach(g=>_variables.Remove(g));
-            }
+            var testVariables = _testVariables.GetOrAdd(experience.Test, () => new Dictionary<object, IRandomValue>());
+            
 
-            _variables.Merge(_testVariables, overwrite: true);            
+            ctx.Sample(testVariables);
+
+            //if (ctx.GoalBoosts.Count > 0)
+            //{
+            //    //Conversion rates are changed. Recalculate conversions when state is updated
+            //    _variables.Keys.OfType<Goal>().Where(g => g.GetState(this) != GoalState.Converted).ToArray().ForEach(g => _variables.Remove(g));
+            //}
+
+            _variables.Merge(testVariables, overwrite: true);            
 
             UpdateState(ctx);
+        }
+
+        public virtual void UpdateState(IEnumerable<IRandomVariable> variables)
+        {
+            var ctx = new SampleContext
+            {
+                Visit = this,
+                Variables = variables.ToList()
+            };
+
+            var newValues = ctx.Sample();            
+            _variables.Merge(newValues, overwrite: true);
+            UpdateState(ctx);            
         }
 
         public Visit Clone()

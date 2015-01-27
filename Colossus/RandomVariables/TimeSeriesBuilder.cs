@@ -15,12 +15,14 @@ namespace Colossus.RandomVariables
 
         public double Min { get; private set; }
         public double Max { get; private set; }
+        public bool Cyclic { get; set; }
 
-        public TimeSeriesBuilder(Func<IRandomDistribution, IRandomVariable> factory, double min, double max)
+        public TimeSeriesBuilder(Func<IRandomDistribution, IRandomVariable> factory, double min, double max, bool cyclic = true)
         {
             _parts = new Dictionary<IEnumerable<IRandomVariable>, double>();
             Min = min;
             Max = max;
+            Cyclic = cyclic;
             Factory = factory;
         }
 
@@ -80,12 +82,27 @@ namespace Colossus.RandomVariables
         {
             CheckBuild();
 
-            var range = (Max - Min);
-            var random = new TruncatedRandom(new RandomSkewNormal(0, scale, shape), -range / 2d, range / 2d, location + range);                       
-
-            _parts.Add(new[] { Factory(random) }, weight);
+            if (Cyclic)
+            {
+                var range = (Max - Min);
+                var random = new TruncatedRandom(new RandomSkewNormal(0, scale, shape), -range/2d, +range/2d, location + range);
+                _parts.Add(new[] {Factory(random)}, weight);
+            }
+            else
+            {
+                var random = new TruncatedRandom(new RandomSkewNormal(location, scale, shape), Min, Max, 0);
+                _parts.Add(new[] { Factory(random) }, weight);
+            }
             return this;
         }
+
+        public TimeSeriesBuilder Weight<TValue>(SampleSet<TValue> set, double weight = 1)
+        {
+            _parts.Add(new[] { Factory(set) }, weight);
+
+            return this;
+        } 
+
 
         private IRandomVariable _variable;
 
@@ -109,8 +126,7 @@ namespace Colossus.RandomVariables
         {
             if (_variable != null) throw new InvalidOperationException("Parts can no longer be added to this builder since it has been used");
         }
-
-
+        
 
 
         public override IRandomValue Sample(SampleContext context = null)

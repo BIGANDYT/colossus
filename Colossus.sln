@@ -12,19 +12,26 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Nerva Demo|Any CPU = Nerva Demo|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B8797092-1DD9-4679-BF8D-C5F0FF70C6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8797092-1DD9-4679-BF8D-C5F0FF70C6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8797092-1DD9-4679-BF8D-C5F0FF70C6ED}.Nerva Demo|Any CPU.ActiveCfg = Nerva Demo|Any CPU
+		{B8797092-1DD9-4679-BF8D-C5F0FF70C6ED}.Nerva Demo|Any CPU.Build.0 = Nerva Demo|Any CPU
 		{B8797092-1DD9-4679-BF8D-C5F0FF70C6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8797092-1DD9-4679-BF8D-C5F0FF70C6ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Nerva Demo|Any CPU.ActiveCfg = Nerva Demo|Any CPU
+		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Nerva Demo|Any CPU.Build.0 = Nerva Demo|Any CPU
 		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6AAB68A-B7DC-4151-930C-3692E403236F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88718576-8FEA-46ED-BBE3-031C844741BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88718576-8FEA-46ED-BBE3-031C844741BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88718576-8FEA-46ED-BBE3-031C844741BB}.Nerva Demo|Any CPU.ActiveCfg = Nerva Demo|Any CPU
+		{88718576-8FEA-46ED-BBE3-031C844741BB}.Nerva Demo|Any CPU.Build.0 = Nerva Demo|Any CPU
 		{88718576-8FEA-46ED-BBE3-031C844741BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88718576-8FEA-46ED-BBE3-031C844741BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
