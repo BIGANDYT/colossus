@@ -410,12 +410,11 @@ namespace Colossus.Console
 
 
             var url = "http://develop.officecore.net/";
-            //var url = "http://pocweb1dk1.pocdomain.scua:2014/";            
 
             int simulated = 1;
 
             var threads = 6;
-            int visitsPerThread = 10000;
+            int visitsPerThread = 100;
 
             //var channels = XDocument.Load(url + "?colossus-map={1EB725EC-BD0A-4B45-9166-9C09BADEDB2C}");
             //var subChannelIds =
@@ -430,7 +429,7 @@ namespace Colossus.Console
             //        GetCities().OrderByDescending(c => c.Population).ToArray(),
             //        0.8, 200);
 
-            Randomness.Seed = new Random().Next(0, 10000);
+            Randomness.Seed = new Random().Next(0, 1000);
 
             var visits = Enumerable.Range(0, threads).AsParallel().WithDegreeOfParallelism(threads).Select(ix =>
             {
@@ -440,18 +439,18 @@ namespace Colossus.Console
                     "Denmark", "France", "Netherlands", "United Kingdom", "Australia", "New Zealand", "Japan", "Anguilla", "Antigua and Barbuda", "Aruba", "Bahamas", "Barbados", "Bonaire", "British Virgin Islands", "Cayman Islands", "Cuba", "Curacao", "Dominica", "Dominican Republic", "Grenada", "Guadeloupe", "Haiti", "Jamaica", "Martinique", "Montserrat", "Puerto Rico", "St Barths", "St Kitts and Nevis", "St Lucia", "St Maarten and St Martin", "St Vincent and the Grenadines", "Trinidad and Tobago", "Turks and Caicos Islands", "US Virgin Islands", "Ukraine"
                 }, .8, 7);
 
-                //var searchPatterns = new DistributedSampleSet<string>(new[]
-                //{
-                //    "Cheap flights to *",
-                //    "Discount flights to *",
-                //    "Cheap business class fares to *",
-                //    "* flights",
-                //    "Airline tickets to *",
-                //    "Jetstream"
-                //});
+                var searchPatterns = new DistributedSampleSet<string>(new[]
+                {
+                    "office supplies",
+                    "holiday",
+                    "lamp",
+                    "camera",
+                    "chair",
+                    "desk lamp"
+                });
 
-                var startYear = 2014d;
-                var endYear = startYear + new DateTime(2014, 9, 12).DayOfYear / 365d;
+                var startYear = 2015d;
+                var endYear = startYear + DateTime.Now.DayOfYear / 365d;
                 var duration = endYear - startYear;
 
                 var landingPages =
@@ -461,23 +460,24 @@ namespace Colossus.Console
                             "/",
                             "Products",
                             "About-Us",
-                            "Contact"//,
-                            //"en/Landing Pages/Ski Lessons",
-                            //"en/Landing Pages/Ski Pass",
-                            //"en/Landing Pages/Skis and Boots"
+                            "Contact",
+                            "office-products/black-goose/c-24/p-105",
+                            "News",
+                            "office-products/holiday-products/c-24/c-70",
+                            "office-products/office-products/c-24/c-69",
+                            "News/2013/06/04/17/01/Officecore-launches-Partner-Incentive"
                         }.Select(pageUrl => new PageAction(url + pageUrl.ToLower()))
                             .ToArray(), .3, 4);
 
                 var baseGroup =
                     new VisitGroup(
-
-                        Variables.Random("Country", Sets.Weight("Denmark", 0.8).Weight("UK", 0.2).Build()),
+                        Variables.Random("Country", Sets.Weight("Denmark", 0.2).Weight("UK", 0.2).Weight("Netherlands", 0.2).Weight("Germany", 0.2).Weight("France", 0.2).Build()),
                         //Variables.Random("City", citites),
-                        Variables.Fixed("Profile", new Dictionary<string, double>
-                        {
-                        {"sandra", 2},    
-                        { "chris", 0.5d }
-                        }),
+                        //Variables.Fixed("Profile", new Dictionary<string, double>
+                        //{
+                        //{"Holiday buyer", 2},    
+                        //{ "Office buyer", 0.5d }
+                        //}),
                  //       Variables.Random("ChannelItemId", Sets.Uniform(subChannelIds)),
                         Variables.Random("DeviceType", Sets.Weight("Desktop", 0.5).Weight("iPhone", 0.5).Build()),
                         Variables.Year(startYear, endYear).LinearTrend(0.5, 1),
@@ -490,9 +490,7 @@ namespace Colossus.Console
                             .Weight(5, 1)
                             .Weight(6, .5).Build()
                             ))
-                    //.Actions(new PageAction { Url=url})
-
-
+                    .Actions(new PageAction(url))
                         .Actions(
                         new VisitActionList
                         {
@@ -500,9 +498,9 @@ namespace Colossus.Console
                             {
                                 new VisitActionSet(Sets.Weight<VisitAction>(
                                         new PageAction(url), 1
-                                    ).Weight(new VisitActionSet(landingPages), .5).Build()),  
+                                    ).Weight(new VisitActionSet(landingPages), .5).Weight(new VisitActionSet(landingPages), .4).Weight(new VisitActionSet(landingPages), .3).Build()),  
                             },
-                            Length = Sets.Weight(1, 0.18).Weight(2, .82).Build()
+                            Length = Sets.Weight(1, 0.18).Weight(2, .82).Weight(2, .87).Weight(2, .92).Build()
                         }
                         )
                     //.Actions(new SiteActionList
@@ -521,13 +519,22 @@ namespace Colossus.Console
                     ;
 
 
-                //var keywordVisitors = new VisitGroup(
-                //    Variables.Random("Keywords", () =>
-                //    {
-                //        return searchPatterns.Sample().Replace("*", countries.Sample());
-                //    }),
-                //    Variables.Random("TrafficType", Sets.Weight(10, 0.9).Weight(15, 0.1).Build()))
-                //    .Override(baseGroup);
+                var keywordVisitors = new VisitGroup(
+                    Variables.Random("Keywords", searchPatterns.Sample),
+                    Variables.Random("TrafficType", Sets.Weight(10, 0.9).Weight(15, 0.1).Build()))
+                    .Override(baseGroup);
+
+                var goals = new[]
+                {                
+                    new UrlTriggeredGoal("Register", 0, url + "/My-Account"),
+                 //   new UrlTriggeredGoal("Requested Callback", 100, url + "/office-products/black-goose/c-24/p-105"),
+                    new UrlTriggeredGoal("Received call-back", 50, url + "/Standard-Items/Call-back"),
+                 //   new UrlTriggeredGoal("Presented with call-back form", 0, "/office-products/black-goose/c-24/p-105"),
+                    new UrlTriggeredGoal("Tell a Friend", 0, url + "/News/2013/06/04/17/01/Officecore-launches-Partner-Incentive"),
+                    new UrlTriggeredGoal("Downloaded Case Study", 25, url + "/Discover/Whitepapers"), 
+                    new UrlTriggeredGoal("Requested Discount Code", 25, url),
+                    new UrlTriggeredGoal("LoginWithSocial", 10, url + "/My-Account"),
+                };
 
 
                 var campaignGroups = new List<VisitGroup>();
@@ -536,13 +543,29 @@ namespace Colossus.Console
                 campaignGroups.Add(new VisitGroup(
                     Variables.Year(startYear, endYear).LinearTrend(0.2, 4, 0.4)
                         .AddPeak(startYear + duration * .3, duration * 0.1, 1),
-                    Variables.Fixed("Campaign", "{6EB3D7B6-2FCB-4BD3-8458-826B21C2D721}")
+                    Variables.Fixed("Campaign", "{6EB3D7B6-2FCB-4BD3-8458-826B21C2D721}"),
+                    Variables.Goal(goals[0], 0.2),
+                    Variables.Goal(goals[1], 0.1),
+                    Variables.Goal(goals[2], 0.2),
+                    Variables.Goal(goals[3], 0.2),
+                    Variables.Goal(goals[4], 0.2),
+                    Variables.Goal(goals[5], 0.1)//,
+                  //  Variables.Goal(goals[6], 0.1),
+                  //  Variables.Goal(goals[7], 0.1)
                     ));
 
                 //mortgages
                 campaignGroups.Add(new VisitGroup(
                     Variables.Year(startYear, endYear).LinearTrend(2, 1),
-                    Variables.Fixed("Campaign", "{C520D564-12FA-4108-82AF-4AF73110BE2C}")
+                    Variables.Fixed("Campaign", "{C520D564-12FA-4108-82AF-4AF73110BE2C}"),
+                    Variables.Goal(goals[0], 0.2),
+                    Variables.Goal(goals[1], 0.1),
+                    Variables.Goal(goals[2], 0.2),
+                    Variables.Goal(goals[3], 0.2),
+                    Variables.Goal(goals[4], 0.2),
+                    Variables.Goal(goals[5], 0.1)//,
+                 //   Variables.Goal(goals[6], 0.1),
+                //    Variables.Goal(goals[7], 0.1)
                     ));
 
 
@@ -550,7 +573,16 @@ namespace Colossus.Console
                 //facebook discount
                 campaignGroups.Add(new VisitGroup(Variables.Year(startYear, endYear)
                     .AddPeak(startYear + duration * .2, duration * 0.04, -2),
-                    Variables.Fixed("Campaign", "{B6CA3741-8510-443A-8A6F-A00BADC5DE53}")));
+                    Variables.Fixed("Campaign", "{B6CA3741-8510-443A-8A6F-A00BADC5DE53}"),
+                    Variables.Goal(goals[0], 0.2),
+                    Variables.Goal(goals[1], 0.1),
+                    Variables.Goal(goals[2], 0.2),
+                    Variables.Goal(goals[3], 0.2),
+                    Variables.Goal(goals[4], 0.2),
+                    Variables.Goal(goals[5], 0.1)//,
+              //      Variables.Goal(goals[6], 0.1),
+             //       Variables.Goal(goals[7], 0.1)
+                ));
 
                 ////Frequent flyer promotion
                 //campaignGroups.Add(new VisitGroup(
@@ -632,7 +664,7 @@ namespace Colossus.Console
 
             var config = new VisitGroup(
                 //These are the "normal" conversion rates (i.e. regardless of test experience)
-                Variables.Goal(goals[0], 0.1),
+                Variables.Goal(goals[0], 0.5),
                 Variables.Goal(goals[1], 0.1)
                // Variables.Goal(goals[2], 0.05)
 

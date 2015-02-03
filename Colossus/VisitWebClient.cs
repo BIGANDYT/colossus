@@ -51,8 +51,13 @@ namespace Colossus
             }
             catch (WebException wex)
             {
-                var response = new StreamReader(wex.Response.GetResponseStream()).ReadToEnd();
-                File.WriteAllText(@"C:\Temp\ColossusError.htm", request.RequestUri + "\r\n\r\n" + response);
+                if (wex.Response != null)
+                {
+                    var response = new StreamReader(wex.Response.GetResponseStream()).ReadToEnd();
+                    File.WriteAllText(@"C:\Temp\ColossusError.htm", request.RequestUri + "\r\n\r\n" + response);
+                }
+                File.WriteAllText(@"C:\Temp\ColossusError.htm", request.RequestUri + "\r\n\r\n" + wex.Message+ "\r\n\r\n" + wex.InnerException + "\r\n\r\n" + wex.StackTrace);
+
                 throw;
             }                                  
         }

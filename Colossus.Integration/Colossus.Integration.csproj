@@ -436,6 +436,7 @@
     <Compile Include="Dimensions\MockDataDimension.cs" />
     <Compile Include="NervaDemoProcessor.cs" />
     <Compile Include="NervaDemo\NervaDemoMockData.cs" />
+    <Compile Include="OfficecoreProcessor.cs" />
     <Compile Include="ProfileProcessor.cs" />
     <Compile Include="TagProcessor.cs" />
     <Compile Include="TestDimension.cs" />

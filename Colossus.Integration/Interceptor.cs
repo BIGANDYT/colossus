@@ -26,7 +26,7 @@ namespace Colossus.Integration
     {
         public static List<ITagDataProcessor> TagProcessors { get; private set; }        
 
-        static Interceptor()
+        public Interceptor()
         {
             TagProcessors = new List<ITagDataProcessor>();
             
@@ -37,6 +37,7 @@ namespace Colossus.Integration
             TagProcessors.Add(new ProfileProcessor());
             TagProcessors.Add(new CampaignProcessor());
             TagProcessors.Add(new NervaDemoProcessor());
+            TagProcessors.Add(new OfficecoreProcessor());
         }
 
 

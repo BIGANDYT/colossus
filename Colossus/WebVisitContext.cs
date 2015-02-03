@@ -38,14 +38,21 @@ namespace Colossus
         
         public void PrepareRequest(WebRequest request)
         {
-            Visit.Tags["StartDate"] = Visit.StartDate.Date;
+            if (request != null)
+            {
+                Visit.Tags["StartDate"] = Visit.StartDate.Date;
 
-            //var value = EncodeHeaderValue(JsonConvert.SerializeObject(Visit.Tags));
-            //JsonConvert.DeserializeObject<JObject>(DecodeHeaderValue(value));
-            request.Headers.Add("X-Colossus-Visit", EncodeHeaderValue(JsonConvert.SerializeObject(Visit.Tags)));
-            request.Headers.Add("X-Colossus-Request", EncodeHeaderValue(JsonConvert.SerializeObject(RequestData)));
+                //var value = EncodeHeaderValue(JsonConvert.SerializeObject(Visit.Tags));
+                //JsonConvert.DeserializeObject<JObject>(DecodeHeaderValue(value));
+                request.Headers.Add("X-Colossus-Visit", EncodeHeaderValue(JsonConvert.SerializeObject(Visit.Tags)));
+                request.Headers.Add("X-Colossus-Request", EncodeHeaderValue(JsonConvert.SerializeObject(RequestData)));
 
-            (request as HttpWebRequest).UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36";
+                var wRequest = (request as HttpWebRequest);
+                if (wRequest != null)
+                {
+                    wRequest.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36";
+                }
+            }
         }
 
         static string EncodeHeaderValue(string value)
