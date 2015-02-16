@@ -11,7 +11,6 @@ using Sitecore.Analytics;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Links;
-using Sitecore.Shell.Applications.WebEdit.Commands;
 
 namespace Colossus.Integration
 {

@@ -9,13 +9,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using Colossus.Geo;
 using Colossus.Pages;
 using Colossus.RandomVariables;
 using Colossus.Symposium;
-using FiftyOne.Foundation.Mobile.Detection;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
