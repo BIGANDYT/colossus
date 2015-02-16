@@ -413,7 +413,7 @@ namespace Colossus.Console
             int simulated = 1;
 
             var threads = 6;
-            int visitsPerThread = 100;
+            int visitsPerThread = 500;
 
             //var channels = XDocument.Load(url + "?colossus-map={1EB725EC-BD0A-4B45-9166-9C09BADEDB2C}");
             //var subChannelIds =
@@ -448,7 +448,7 @@ namespace Colossus.Console
                     "desk lamp"
                 });
 
-                var startYear = 2015d;
+                var startYear = 2014d;
                 var endYear = startYear + DateTime.Now.DayOfYear / 365d;
                 var duration = endYear - startYear;
 
@@ -583,20 +583,6 @@ namespace Colossus.Console
              //       Variables.Goal(goals[7], 0.1)
                 ));
 
-                ////Frequent flyer promotion
-                //campaignGroups.Add(new VisitGroup(
-                //    Variables.Fixed("Campaign", "{F5061EFE-4E79-47FC-8871-7C641C37256C}"),
-                //    Variables.Year(startYear, endYear).AddPeak(startYear + duration * .7, duration * .03, 3)));
-
-                ////Facebook
-                //campaignGroups.Add(new VisitGroup(
-                //    Variables.Year(startYear, endYear).AddPeak(startYear + duration * .5, duration * .1, 1),
-                //    Variables.Fixed("Campaign", "{C0374204-6ABF-4082-BF14-95F578337C4B}")));
-
-                ////campaignGroups.Add(new VisitGroup(Variables.Year(startYear, endYear).AddPeak(startYear + duration * .7, duration * 0.1, 1),
-                ////    Variables.Fixed("Campaign", "{FFF73FDB-9696-447B-B461-7CA7BACB8564}")));
-
-
                 var campaignVisitors = new VisitGroup(
                          Variables.Random("TrafficType", Sets.Weight(10, 0.33).Weight(15, 0.67).Build())).Override(baseGroup);
 
@@ -612,7 +598,7 @@ namespace Colossus.Console
 
                 var groups = Sets
                     .Weight<Func<VisitGroup>>(() => baseGroup, 0.2)
-                   // .Weight(() => keywordVisitors, 0.5)
+                    .Weight(() => keywordVisitors, 0.5)
                     .Weight(cgSet.Sample, 0.3).Build();
 
                 var sim = new VisitSimulator(() => groups.Sample()(), new ExperienceCrawler());
