@@ -407,14 +407,12 @@ namespace Colossus.Console
 
         static void NervaDemo()
         {
-
-
             var url = "http://develop.officecore.net/";
 
             int simulated = 1;
 
             var threads = 6;
-            int visitsPerThread = 500;
+            int visitsPerThread = 1000;
 
             //var channels = XDocument.Load(url + "?colossus-map={1EB725EC-BD0A-4B45-9166-9C09BADEDB2C}");
             //var subChannelIds =
@@ -449,9 +447,8 @@ namespace Colossus.Console
                     "desk lamp"
                 });
 
-                var startYear = 2014d;
-                var endYear = startYear + DateTime.Now.DayOfYear / 365d;
-                var duration = endYear - startYear;
+                var startDate = new DateTime(2014, 1, 1).YearFraction();
+                var endDate = DateTime.Now.YearFraction();
 
                 var landingPages =
                     Sets.Exponential(
@@ -463,24 +460,26 @@ namespace Colossus.Console
                             "Contact",
                             "office-products/black-goose/c-24/p-105",
                             "News",
-                            "office-products/holiday-products/c-24/c-70",
-                            "office-products/office-products/c-24/c-69",
+                         //   "office-products/holiday-products/c-24/c-70",
+                           // "office-products/office-products/c-24/c-69",
                             "News/2013/06/04/17/01/Officecore-launches-Partner-Incentive"
                         }.Select(pageUrl => new PageAction(url + pageUrl.ToLower()))
                             .ToArray(), .3, 4);
 
                 var baseGroup =
                     new VisitGroup(
-                        Variables.Random("Country", Sets.Weight("Denmark", 0.2).Weight("UK", 0.2).Weight("Netherlands", 0.2).Weight("Germany", 0.2).Weight("France", 0.2).Build()),
-                        //Variables.Random("City", citites),
-                        //Variables.Fixed("Profile", new Dictionary<string, double>
-                        //{
-                        //{"Holiday buyer", 2},    
-                        //{ "Office buyer", 0.5d }
-                        //}),
-                 //       Variables.Random("ChannelItemId", Sets.Uniform(subChannelIds)),
-                        Variables.Random("DeviceType", Sets.Weight("Desktop", 0.5).Weight("iPhone", 0.5).Build()),
-                        Variables.Year(startYear, endYear).LinearTrend(0.5, 1),
+                        Variables.Random("Country", Sets.Weight("DK", 0.2).Weight("GB", 0.2).Weight("NL", 0.2).Weight("DE", 0.2).Weight("JP", 0.2).Build()),
+                        Variables.Random("Language", Sets.Weight("en-GB", 0.8).Weight("ja-JP", 0.2).Build()),
+                    //Variables.Random("City", citites),
+                    //Variables.Fixed("Profile", new Dictionary<string, double>
+                    //{
+                    //{"Holiday buyer", 2},    
+                    //{ "Office buyer", 0.5d }
+                    //}),
+                    //       Variables.Random("ChannelItemId", Sets.Uniform(subChannelIds)),
+                        Variables.Random("DeviceType", Sets.Weight("Desktop", 0.8).Weight("iPhone", 0.2).Build()),
+                        Variables.Random("TrafficType", Sets.Weight(20, 0.9).Weight(50, 0.1).Build()),
+                        Variables.Year(startDate, endDate).DrawTrend().LineTo(startDate + 1, level: 2).LineTo(endDate, level: 1).Close(),
                         Variables.DayOfWeek().Weight(Sets
                             .Weight(0, .5)
                             .Weight(1, 1)
@@ -518,7 +517,6 @@ namespace Colossus.Console
                     .DefaultDuration(new TruncatedRandom(new RandomNormal(60, 30), 5, 1000))
                     ;
 
-
                 var keywordVisitors = new VisitGroup(
                     Variables.Random("Keywords", searchPatterns.Sample),
                     Variables.Random("TrafficType", Sets.Weight(10, 0.9).Weight(15, 0.1).Build()))
@@ -539,68 +537,56 @@ namespace Colossus.Console
 
                 var campaignGroups = new List<VisitGroup>();
 
-                //office supplies
+                // Office Supplies campaign
+                // When coming in on Office Supplies campaign we always come in from Search Engine - Organic (10) or Search Engine - Organic Branded (15)
                 campaignGroups.Add(new VisitGroup(
-                    Variables.Year(startYear, endYear).LinearTrend(0.2, 4, 0.4)
-                        .AddPeak(startYear + duration * .3, duration * 0.1, 1),
+                    Variables.Year(startDate, endDate).DrawTrend().LineTo(startDate + 1, level: 2).LineTo(endDate, level: 1).Close(),
+                    //,, .AddPeak(startYear + duration * .3, duration * 0.1, 1),
                     Variables.Fixed("Campaign", "{6EB3D7B6-2FCB-4BD3-8458-826B21C2D721}"),
+                    Variables.Random("TrafficType", Sets.Weight(10, 0.87).Weight(15, 0.23).Build()),
                     Variables.Goal(goals[0], 0.2),
                     Variables.Goal(goals[1], 0.1),
                     Variables.Goal(goals[2], 0.2),
                     Variables.Goal(goals[3], 0.2),
                     Variables.Goal(goals[4], 0.2),
-                    Variables.Goal(goals[5], 0.1)//,
-                  //  Variables.Goal(goals[6], 0.1),
-                  //  Variables.Goal(goals[7], 0.1)
-                    ));
+                    Variables.Goal(goals[5], 0.1)
+                    ).Override(baseGroup));
 
-                //mortgages
+                // Mortgages campaign
+                // When coming in on Mortgages campaign we always come in from Search Engine - Organic (10) or Search Engine - Organic Branded (15)
                 campaignGroups.Add(new VisitGroup(
-                    Variables.Year(startYear, endYear).LinearTrend(2, 1),
+                    Variables.Year(startDate, endDate).DrawTrend().LineTo(startDate + 1, level: 2).LineTo(endDate, level: 1).Close(),
                     Variables.Fixed("Campaign", "{C520D564-12FA-4108-82AF-4AF73110BE2C}"),
+                    Variables.Random("TrafficType", Sets.Weight(10, 0.87).Weight(15, 0.23).Build()),
                     Variables.Goal(goals[0], 0.2),
                     Variables.Goal(goals[1], 0.1),
                     Variables.Goal(goals[2], 0.2),
                     Variables.Goal(goals[3], 0.2),
                     Variables.Goal(goals[4], 0.2),
-                    Variables.Goal(goals[5], 0.1)//,
-                 //   Variables.Goal(goals[6], 0.1),
-                //    Variables.Goal(goals[7], 0.1)
-                    ));
+                    Variables.Goal(goals[5], 0.1)
+                    ).Override(baseGroup));
 
-
-
-                //facebook discount
-                campaignGroups.Add(new VisitGroup(Variables.Year(startYear, endYear)
-                    .AddPeak(startYear + duration * .2, duration * 0.04, -2),
+                // Facebook Discount campaign
+                // When coming in on Mortgages campaign we always come in from Referred - Community (34)
+                campaignGroups.Add(new VisitGroup(
+                    Variables.Year(startDate, endDate).DrawTrend().LineTo(startDate + 1, level: 2).LineTo(endDate, level: 1).Close(),
+                    //.AddPeak(startYear + duration * .2, duration * 0.04, -2),
                     Variables.Fixed("Campaign", "{B6CA3741-8510-443A-8A6F-A00BADC5DE53}"),
+                    Variables.Fixed("TrafficType", 34),
                     Variables.Goal(goals[0], 0.2),
                     Variables.Goal(goals[1], 0.1),
                     Variables.Goal(goals[2], 0.2),
                     Variables.Goal(goals[3], 0.2),
                     Variables.Goal(goals[4], 0.2),
-                    Variables.Goal(goals[5], 0.1)//,
-              //      Variables.Goal(goals[6], 0.1),
-             //       Variables.Goal(goals[7], 0.1)
-                ));
-
-                var campaignVisitors = new VisitGroup(
-                         Variables.Random("TrafficType", Sets.Weight(10, 0.33).Weight(15, 0.67).Build())).Override(baseGroup);
-
-
-
-
-
-                foreach (var cg in campaignGroups) cg.Override(campaignVisitors);
+                    Variables.Goal(goals[5], 0.1)
+                ).Override(baseGroup));
 
                 var cgSet = Sets.Uniform(campaignGroups.ToArray());
 
-                //.Pages(SimplePageSequenceGenerator.Fixed(url));
-
                 var groups = Sets
                     .Weight<Func<VisitGroup>>(() => baseGroup, 0.2)
-                    .Weight(() => keywordVisitors, 0.5)
-                    .Weight(cgSet.Sample, 0.3).Build();
+                    .Weight(() => keywordVisitors, 0.2)
+                    .Weight(cgSet.Sample, 0.6).Build();
 
                 var sim = new VisitSimulator(() => groups.Sample()(), new ExperienceCrawler());
 
