@@ -427,6 +427,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignProcessor.cs" />
+    <Compile Include="DeviceProcessor.cs" />
     <Compile Include="Dimensions\ByChannel.cs" />
     <Compile Include="Dimensions\ByChannelType.cs" />
     <Compile Include="Dimensions\ByDeviceType.cs" />

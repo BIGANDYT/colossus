@@ -31,7 +31,7 @@ namespace Colossus.Integration
             TagProcessors = new List<ITagDataProcessor>();
             
 
-
+            TagProcessors.Add(new DeviceProcessor());
             TagProcessors.Add(new WhoIsProcessor());
             TagProcessors.Add(new TimeTravel());
             TagProcessors.Add(new ProfileProcessor());

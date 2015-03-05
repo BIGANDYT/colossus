@@ -477,7 +477,7 @@ namespace Colossus.Console
                     //{ "Office buyer", 0.5d }
                     //}),
                     //       Variables.Random("ChannelItemId", Sets.Uniform(subChannelIds)),
-                        Variables.Random("DeviceType", Sets.Weight("Desktop", 0.8).Weight("iPhone", 0.2).Build()),
+                        Variables.Random("Device", Sets.Weight("{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}", 0.8).Weight("{74437005-A7E6-4450-B6CB-8354859FE1E8}", 0.2).Build()),
                         Variables.Random("TrafficType", Sets.Weight(20, 0.9).Weight(50, 0.1).Build()),
                         Variables.Year(startDate, endDate).DrawTrend().LineTo(startDate + 1, level: 2).LineTo(endDate, level: 1).Close(),
                         Variables.DayOfWeek().Weight(Sets
