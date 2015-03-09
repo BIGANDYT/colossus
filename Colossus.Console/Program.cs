@@ -468,7 +468,7 @@ namespace Colossus.Console
 
                 var baseGroup =
                     new VisitGroup(
-                        Variables.Random("Country", Sets.Weight("DK", 0.2).Weight("GB", 0.2).Weight("NL", 0.2).Weight("DE", 0.2).Weight("JP", 0.2).Build()),
+                        Variables.Random("Country", Sets.Weight("Denmark", 0.2).Weight("United Kingdom", 0.2).Weight("France", 0.2).Weight("Germany", 0.2).Weight("Japan", 0.2).Build()),
                         Variables.Random("Language", Sets.Weight("en-GB", 0.8).Weight("ja-JP", 0.2).Build()),
                     //Variables.Random("City", citites),
                     //Variables.Fixed("Profile", new Dictionary<string, double>

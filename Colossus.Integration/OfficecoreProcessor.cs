@@ -17,7 +17,7 @@ namespace Colossus.Integration
             {
                 // Simple function to see whether user should identify. 90% chance to identify
                 var id = new Random(Guid.NewGuid().GetHashCode());
-                if (id.NextDouble() <= 0.9)
+                if (id.NextDouble() <= 0.98)
                 {
                     // Existing contacts are identified with numbers between 1-1000 (including 1000)
                     var random = new Random(Guid.NewGuid().GetHashCode());
