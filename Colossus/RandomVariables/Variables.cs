@@ -77,5 +77,10 @@ namespace Colossus.RandomVariables
 
             return new RandomFork(builder.Build());
         }
+
+        public static double YearFraction(this DateTime d)
+        {
+            return d.Year + ((d.DayOfYear - 1) / (DateTime.IsLeapYear(d.Year) ? 366d : 365d));
+        }
     }
 }
