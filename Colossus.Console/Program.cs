@@ -410,8 +410,8 @@ namespace Colossus.Console
 
             int simulated = 1;
 
-            var threads = 6;
-            int visitsPerThread = 1000;
+            var threads = 3;
+            int visitsPerThread = 100;
 
             //var channels = XDocument.Load(url + "?colossus-map={1EB725EC-BD0A-4B45-9166-9C09BADEDB2C}");
             //var subChannelIds =
@@ -457,10 +457,11 @@ namespace Colossus.Console
                             "Products",
                             "About-Us",
                             "Contact",
-                           // "office-products/black-goose/c-24/p-105",
+                            "My-Account",
+                            "office-products/black-goose/c-24/p-105",
                             "News",
-                         //   "office-products/holiday-products/c-24/c-70",
-                           // "office-products/office-products/c-24/c-69",
+                            "/Standard-Items/Call-back",
+                            "/Discover/Whitepapers",
                             "News/2013/06/04/17/01/Officecore-launches-Partner-Incentive"
                         }.Select(pageUrl => new PageAction(url + pageUrl.ToLower()))
                             .ToArray(), .3, 4);
@@ -543,12 +544,21 @@ namespace Colossus.Console
                     //,, .AddPeak(startYear + duration * .3, duration * 0.1, 1),
                     Variables.Fixed("Campaign", "{6EB3D7B6-2FCB-4BD3-8458-826B21C2D721}"),
                     Variables.Random("TrafficType", Sets.Weight(10, 0.87).Weight(15, 0.23).Build()),
-                    Variables.Goal(goals[0], 0.2),
-                    Variables.Goal(goals[1], 0.1),
-                    Variables.Goal(goals[2], 0.2),
-                    Variables.Goal(goals[3], 0.2),
-                    Variables.Goal(goals[4], 0.2),
-                    Variables.Goal(goals[5], 0.1)
+                    Variables.Random("Goals", Sets.Weight("{8FFB183B-DA1A-4C74-8F3A-9729E9FCFF6A}|/My-Account", 0.1)
+                                            .Weight("{84B7FB1A-C005-4C4B-B1F0-BB1A464E3D66}|/office-products/black-goose/c-24/p-105", 0.2)
+                                            .Weight("{7E2341AA-E8A1-4051-9A84-7A1496A70BCC}|/Standard-Items/Call-back", 0.2)
+                                            .Weight("{60D7D87D-EF7B-4B66-ACC6-3689FCFB10E9}|/News/2013/06/04/17/01/Officecore-launches-Partner-Incentive", 0.1)
+                                            .Weight("{FE84A00B-1507-4CCF-8A83-CB137ABE30B4}|/Discover/Whitepapers", 0.1)
+                                            .Weight("{56C6C139-6361-4072-8482-BA2A5A5F21B6}|/", 0.2)
+                                            .Weight("{E54D4D6A-3B06-47F9-B622-97D0DC7CBA76}|/My-Account", 0.1)
+                                            .Build()
+                    )
+                    //Variables.Goal(goals[0], 0.2),
+                    //Variables.Goal(goals[1], 0.1),
+                    //Variables.Goal(goals[2], 0.2),
+                    //Variables.Goal(goals[3], 0.2),
+                    //Variables.Goal(goals[4], 0.2),
+                    //Variables.Goal(goals[5], 0.1)
                     ).Override(baseGroup));
 
                 // Mortgages campaign
@@ -557,13 +567,21 @@ namespace Colossus.Console
                     Variables.Year(startDate, endDate).DrawTrend().LineTo(startDate + 1, level: 2).LineTo(endDate, level: 1).Close(),
                     Variables.Fixed("Campaign", "{C520D564-12FA-4108-82AF-4AF73110BE2C}"),
                     Variables.Random("TrafficType", Sets.Weight(10, 0.87).Weight(15, 0.23).Build()),
-                    Variables.Goal(goals[0], 0.2),
-                    Variables.Goal(goals[1], 0.1),
-                    Variables.Goal(goals[2], 0.2),
-                    Variables.Goal(goals[3], 0.2),
-                    Variables.Goal(goals[4], 0.2),
-                    Variables.Goal(goals[5], 0.1)
-                    ).Override(baseGroup));
+                    Variables.Random("Goals", Sets.Weight("{8FFB183B-DA1A-4C74-8F3A-9729E9FCFF6A}|My-Account", 0.1)
+                                            .Weight("{84B7FB1A-C005-4C4B-B1F0-BB1A464E3D66}|/office-products/black-goose/c-24/p-105", 0.2)
+                                            .Weight("{7E2341AA-E8A1-4051-9A84-7A1496A70BCC}|/Standard-Items/Call-back", 0.2)
+                                            .Weight("{60D7D87D-EF7B-4B66-ACC6-3689FCFB10E9}|/News/2013/06/04/17/01/Officecore-launches-Partner-Incentive", 0.1)
+                                            .Weight("{FE84A00B-1507-4CCF-8A83-CB137ABE30B4}|/Discover/Whitepapers", 0.1)
+                                            .Weight("{56C6C139-6361-4072-8482-BA2A5A5F21B6}|/", 0.2)
+                                            .Weight("{E54D4D6A-3B06-47F9-B622-97D0DC7CBA76}|/My-Account", 0.1)
+                                            .Build()
+                    //Variables.Goal(goals[0], 0.2),
+                    //Variables.Goal(goals[1], 0.1),
+                    //Variables.Goal(goals[2], 0.2),
+                    //Variables.Goal(goals[3], 0.2),
+                    //Variables.Goal(goals[4], 0.2),
+                    //Variables.Goal(goals[5], 0.1)
+                    )).Override(baseGroup));
 
                 // Facebook Discount campaign
                 // When coming in on Mortgages campaign we always come in from Referred - Community (34)
@@ -572,13 +590,21 @@ namespace Colossus.Console
                     //.AddPeak(startYear + duration * .2, duration * 0.04, -2),
                     Variables.Fixed("Campaign", "{B6CA3741-8510-443A-8A6F-A00BADC5DE53}"),
                     Variables.Fixed("TrafficType", 34),
-                    Variables.Goal(goals[0], 0.2),
-                    Variables.Goal(goals[1], 0.1),
-                    Variables.Goal(goals[2], 0.2),
-                    Variables.Goal(goals[3], 0.2),
-                    Variables.Goal(goals[4], 0.2),
-                    Variables.Goal(goals[5], 0.1)
-                ).Override(baseGroup));
+                    //Variables.Goal(goals[0], 0.2),
+                    //Variables.Goal(goals[1], 0.1),
+                    //Variables.Goal(goals[2], 0.2),
+                    //Variables.Goal(goals[3], 0.2),
+                    //Variables.Goal(goals[4], 0.2),
+                    //Variables.Goal(goals[5], 0.1)
+                    Variables.Random("Goals", Sets.Weight("{8FFB183B-DA1A-4C74-8F3A-9729E9FCFF6A}|My-Account", 0.1)
+                                            .Weight("{84B7FB1A-C005-4C4B-B1F0-BB1A464E3D66}|/office-products/black-goose/c-24/p-105", 0.2)
+                                            .Weight("{7E2341AA-E8A1-4051-9A84-7A1496A70BCC}|/Standard-Items/Call-back", 0.2)
+                                            .Weight("{60D7D87D-EF7B-4B66-ACC6-3689FCFB10E9}|/News/2013/06/04/17/01/Officecore-launches-Partner-Incentive", 0.1)
+                                            .Weight("{FE84A00B-1507-4CCF-8A83-CB137ABE30B4}|/Discover/Whitepapers", 0.1)
+                                            .Weight("{56C6C139-6361-4072-8482-BA2A5A5F21B6}|/", 0.2)
+                                            .Weight("{E54D4D6A-3B06-47F9-B622-97D0DC7CBA76}|/My-Account", 0.1)
+                                            .Build()
+                )).Override(baseGroup));
 
                 var cgSet = Sets.Uniform(campaignGroups.ToArray());
 

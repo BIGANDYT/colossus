@@ -98,6 +98,7 @@
     <Compile Include="Dimensions\ByPatternRenamed.cs" />
     <Compile Include="Dimensions\BySubChannel.cs" />
     <Compile Include="Dimensions\MockDataDimension.cs" />
+    <Compile Include="GoalProcessor.cs" />
     <Compile Include="NervaDemoProcessor.cs" />
     <Compile Include="NervaDemo\NervaDemoMockData.cs" />
     <Compile Include="OfficecoreProcessor.cs" />

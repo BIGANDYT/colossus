@@ -37,6 +37,7 @@ namespace Colossus.Integration
             TagProcessors.Add(new CampaignProcessor());
             TagProcessors.Add(new NervaDemoProcessor());
             TagProcessors.Add(new OfficecoreProcessor());
+            TagProcessors.Add(new GoalProcessor());
         }
 
 
