@@ -19,7 +19,7 @@ namespace Colossus.Integration
                 var id = new Random(Guid.NewGuid().GetHashCode());
                 if (id.NextDouble() <= 0.98)
                 {
-                     Existing contacts are identified with numbers between 1-1000 (including 1000)
+                    // Existing contacts are identified with numbers between 1-1000 (including 1000)
                     var random = new Random(Guid.NewGuid().GetHashCode());
                     Tracker.Current.Session.Identify(random.Next(1, 1000).ToString()); // = Guid.Parse(cid);
                 }
